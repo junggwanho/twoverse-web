@@ -52,8 +52,8 @@ function Login(props) {
                   };
                   fetch("http://localhost:3001/login", {
                     method: "post",
-                    hearders: {
-                      "content-type": "application.json",
+                    headers: {
+                      "content-type": "application/json",
                     },
                     body: JSON.stringify(userData),
                   })

@@ -75,8 +75,10 @@ function Signin(props) {
               onClick={() => {
                 const userData = {
                   userId: id,
+                  userNick: nick,
                   userPassword: password,
                   userPassword2: password2,
+                  userPhoneNumber: phoneNumber,
                 };
                 fetch("http://localhost:3001/signin", { //signin 주소에서 받을 예정
                   method: "post", // method :통신방법
