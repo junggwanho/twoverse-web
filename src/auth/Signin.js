@@ -80,7 +80,7 @@ function Signin(props) {
                   userPassword2: password2,
                   userPhoneNumber: phoneNumber,
                 };
-                fetch("http://localhost:3001/signin", { //signin 주소에서 받을 예정
+                fetch("http://localhost:3001/auth/signin", { //signin 주소에서 받을 예정
                   method: "post", // method :통신방법
                   headers: {      // headers: API 응답에 대한 정보를 담음
                     "content-type": "application/json",
