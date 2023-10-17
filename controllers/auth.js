@@ -5,7 +5,6 @@ const session = require('express-session')
 const db = require('../lib/db');
 
 exports.signin = async (req, res) => {  // 데이터 받아서 결과 전송
-    console.log("whi");
     const username = req.body.userId;
     const password = req.body.userPassword;
     const password2 = req.body.userPassword2;
