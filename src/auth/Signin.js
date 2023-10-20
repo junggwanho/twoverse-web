@@ -90,11 +90,13 @@ function Signin(props) {
                   .then((res) => res.json())
                   .then((json) => {
                     if (json.isSuccess === "True") {
+                      console.log('1');
                       alert('회원가입이 완료되었습니다!')
                       props.setMode("LOGIN");
                     }
                     else {
                       alert(json.isSuccess)
+                      props.setMode("SIGNIN");
                     }
                   });
               }}>Sign in</button>
