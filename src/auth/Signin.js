@@ -22,13 +22,6 @@ function Signin(props) {
                   onChange={event => {
                     setId(event.target.value);
                   }}/>
-                <input type="text"
-                  className="form-control form-control-password"
-                  placeholder="닉네임을 입력해주세요"
-                  required 
-                  onChange={event => {
-                    setNick(event.target.value);
-                  }}/>
                 <input type="password"
                   className="form-control form-control-password"
                   placeholder="비밀번호를 입력해주세요"
@@ -42,14 +35,6 @@ function Signin(props) {
                   required 
                   onChange={event => {
                     setPassword2(event.target.value);
-                  }}/>
-                <input type="text"
-                  className="form-control form-control-password"
-                  placeholder="전화번호를 입력해주세요"
-                  maxLength="11"
-                  required 
-                  onChange={event => {
-                    setPhoneNumber(event.target.value);
                   }}/>
               </div>
 
