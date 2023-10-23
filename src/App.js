@@ -8,7 +8,7 @@ import FindPw from './auth/FindPw';
 
 
 function App() {
-  const [mode, setMode] = useState("");
+  const [mode, setMode] = useState("LOGIN");
 
   useEffect(() => {
     fetch("http://localhost:3001/authcheck")

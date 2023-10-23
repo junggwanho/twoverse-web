@@ -41,14 +41,12 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// '/auth' 경로를 사용하는 라우터 추가
-app.use('/auth', authRouter);
 
 // '/' 루트 경로에 대한 요청 처리 (React 앱 진입점 페이지)
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
-app.get('/authcheck', (req, res) => {
+app.use('/authcheck', (req, res) => {
     const sendData = { isLogin: "" };
     if (req.session.is_logined) {
         sendData.isLogin = "True"
@@ -57,6 +55,9 @@ app.get('/authcheck', (req, res) => {
     }
     res.send(sendData);
 })
+
+// '/auth' 경로를 사용하는 라우터 추가
+app.use('/auth', authRouter);
 
 // 404 에러 핸들링 미들웨어
 app.use((req, res, next) => {

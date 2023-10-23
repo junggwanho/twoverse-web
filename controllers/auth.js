@@ -10,58 +10,48 @@ exports.signin = async (req, res, next) => {  // 데이터 받아서 결과 전�
 
     try {
         const exUser = await User.findOne({ where: { username } });
-        if (exUser) {
+        if (!exUser) {
+            const hash = await bcrypt.hash(password, 12);
+            await User.create({
+                username,
+                password: hash,
+            });
+            sendData.isSuccess = "True"
+            res.send(sendData);
+        } else {
             sendData.isSuccess = "중복된아이디 입니다"
-            return res.send(sendData);
+            res.send(sendData);
         }
-        const hash = await bcrypt.hash(password, 12);
-        await User.create({
-            username,
-            password: hash,
-        });
-        sendData.isSuccess = "True"
-        res.send(sendData);
     } catch (error) {
         console.error(error);
         return next(error);
     }
 }
 
-// exports.login = async (req, res) => {
-//     const username = req.body.userId;
-//     const password = req.body.userPassword;
-//     const sendData = { isLogin: "" };
+exports.login = async (req, res, next) => {
+    const username = req.body.userId;
+    const password = req.body.userPassword;
 
-//     if (username && password) {             // id와 pw가 입력되었는지 확인
-//         db.query('SELECT * FROM userTable WHERE username = ?', [username], function (error, results, fields) {
-//             if (error) throw error;
-//             if (results.length > 0) {       // db에서의 반환값이 있다 = 일치하는 아이디가 있다.
+    const sendData = { isSuccess: "" };
 
-//                 bcrypt.compare(password, results[0].password, (err, result) => {    // 입력된 비밀번호가 해시된 저장값과 같은 값인지 비교
-
-//                     if (result === true) {                  // 비밀번호가 일치하면
-//                         req.session.is_logined = true;      // 세션 정보 갱신
-//                         req.session.nickname = username;
-//                         req.session.save(function () {
-//                             sendData.isLogin = "True"
-//                             console.log('login');
-//                             res.send(sendData);
-//                         });
-//                         db.query(`INSERT INTO logTable (created, username, action, command, actiondetail) VALUES (NOW(), ?, 'login' , ?, ?)`
-//                             , [req.session.nickname, '-', `React 로그인 테스트`], function (error, result) { });
-//                     }
-//                     else {                                   // 비밀번호가 다른 경우
-//                         sendData.isLogin = "로그인 정보가 일치하지 않습니다.";
-//                         res.send(sendData);
-//                     }
-//                 })
-//             } else {    // db에 해당 아이디가 없는 경우
-//                 sendData.isLogin = "아이디 정보가 일치하지 않습니다.";
-//                 res.send(sendData);
-//             }
-//         });
-//     } else {            // 아이디, 비밀번호 중 입력되지 않은 값이 있는 경우
-//         sendData.isLogin = "아이디와 비밀번호를 입력하세요!";
-//         res.send(sendData);
-//     }
-// };
+    try {
+        const exUser = await User.findOne({ where: { username } });
+        if (!exUser) {
+            sendData.isSuccess = "사용자를 찾을 수 없습니다";
+            res.send(sendData);
+        } else {
+            const isPasswordValid = await bcrypt.compare(password, exUser.password);
+            if (isPasswordValid) {
+                console.log('로그인 성공');
+                sendData.isSuccess = "True";
+                res.send(sendData);
+            } else {
+                sendData.isSuccess = "비밀번호가 일치하지 않습니다";
+                res.send(sendData);
+            }
+        }
+    } catch (error) {
+        console.error(error);
+        return next(error);
+    }
+}
