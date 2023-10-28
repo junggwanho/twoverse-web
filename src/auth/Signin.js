@@ -29,6 +29,11 @@ function Signin(props) {
   }
 
   const handleSubmit = async () => {
+    if (id.length === 0) {
+      alert('아이디를 입력해주세요.');
+      return; // submit 동작을 막음
+    }
+    
     if (password.length === 0) {
       alert('비밀번호를 입력해주세요.');
       return; // submit 동작을 막음
@@ -94,27 +99,37 @@ function Signin(props) {
                 <input type="text"
                   className="form-control form-control-email"
                   placeholder="아이디를 입력해주세요"
-                  required
                   value={id}
                   onChange={handleIdInputChange}
                 />
                 <input type="password"
                   className="form-control form-control-password"
                   placeholder="비밀번호를 입력해주세요"
-                  required
                   value={password}
                   onChange={handlePasswordInputChange}
                 />
                 {passwordErrorMessage && (
-                  <p style={{ color: 'red' }}>{passwordErrorMessage}</p>
+                  <p style={{ color: 'red', 
+                              fontSize: '13px'}}>{passwordErrorMessage}</p>
                 )}
                 <input type="password"
                   className="form-control form-control-password"
                   placeholder="비밀번호를 다시 입력해주세요"
-                  required
                   onChange={event => {
                     setPassword2(event.target.value);
                   }} />
+                <div>
+                  <input type="email"
+                    className="form-control form-control-email"
+                    placeholder="email을 입력해주세요"
+                    required
+                    value={password}
+                    onChange={handlePasswordInputChange}
+                  />
+                  <button>
+                    인증번호 발송
+                  </button>
+                </div>
               </div>
 
               <div className='find-join-group'>
