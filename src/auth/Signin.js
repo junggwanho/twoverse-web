@@ -28,7 +28,7 @@ function Signin(props) {
     setPassword(inputValue); // 비밀번호 상태 업데이트
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (password.length === 0) {
       alert('비밀번호를 입력해주세요.');
       return; // submit 동작을 막음
@@ -49,26 +49,39 @@ function Signin(props) {
       userPassword: password,
     };
 
-    fetch("http://localhost:3001/auth/signin", {
-      method: "post",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        if (!(json.isSuccess === "True")) {
+    try {
+      const response = await fetch("http://localhost:3001/auth/signin", {
+        method: "post",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (response.ok) {
+        const json = await response.json();
+        if (json.isSuccess === "True") {
           alert('회원가입이 완료되었습니다!');
           props.setMode("LOGIN");
         } else {
           alert(json.isSuccess);
+          return; // submit 동작을 막음
         }
-      });
+      } else {
+        alert('서버 요청에 문제가 있습니다.');
+        return; // submit 동작을 막음
+      }
+    } catch (error) {
+      console.error('오류 발생:', error);
+      alert('서버 요청 중 오류가 발생했습니다.');
+      return; // submit 동작을 막음
+    }
+
     // 폼을 제출
     const formElement = document.getElementById('signin-form'); // 폼의 ID를 설정하세요
     formElement.submit();
   };
+
 
   return <>
     <div>

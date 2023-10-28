@@ -17,10 +17,10 @@ exports.signin = async (req, res, next) => {  // 데이터 받아서 결과 전�
                 password: hash,
             });
             sendData.isSuccess = "True"
-            res.send(sendData);
+            await res.send(sendData);
         } else {
             sendData.isSuccess = "중복된아이디 입니다"
-            res.send(sendData);
+            await res.send(sendData);
         }
     } catch (error) {
         console.error(error);
