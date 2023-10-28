@@ -1,5 +1,10 @@
 const bcrypt = require('bcrypt');
 const passport = require('passport');
+const nodemailer = require('nodemailer');
+const ejs = require('ejs');
+const path = require('path');
+var appDir = path.dirname(require.main.filename);
+
 const User = require('../models/user')
 
 exports.signin = async (req, res, next) => {  // 데이터 받아서 결과 전송
@@ -55,3 +60,50 @@ exports.login = async (req, res, next) => {
         return next(error);
     }
 }
+
+exports.email = async (req, res) => {
+    const sendData = {
+        emailCheck: "",
+        userCheck: ""
+    };
+
+    try {
+        let authNum = Math.random().toString().substring(2, 6);
+        let emailTemplate;
+        ejs.renderFile(appDir + '/template/authMail.ejs', { authCode: authNum }, function (err, data) {
+            if (err) {
+                console.log(err);
+            }
+            emailTemplate = data;
+        });
+
+        let transporter = nodemailer.createTransport({
+            service: 'naver',
+            host: 'smtp.naver.com',
+            port: 587,
+            secure: false,
+            auth: {
+                user: 'rhksgh1222@naver.com',
+                pass: process.env.NODEMAILER_PASS,
+            },
+        });
+
+        let mailOptions = await transporter.sendMail({
+            from: '"정관호" <rhksgh1222@naver.com>',
+            to: req.body.userEmail,
+            subject: '회원가입을 위한 인증번호를 입력해주세요.',
+            html: emailTemplate,
+        });
+
+        transporter.sendMail(mailOptions, function () {
+            sendData.emailCheckNum = authNum;
+            sendData.emailCheck = "True";
+            res.send(sendData);
+            transporter.close();
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('서버 오류');
+    }
+};
+

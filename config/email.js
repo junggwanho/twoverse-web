@@ -10,8 +10,8 @@ export const smtpTransport = nodemailer.createTransport({
     secure : false, // 보안연결임 true로 하면 보안연결된다
     requireTLS : true, 
     auth : {
-        user: "qkrrn0315@naver.com", // 개인 네이버아이디 @ naver.com
-        pass : "rn910724rnhot!!" //개인 네이버 비밀번호
+        user: "rhksgh1222@naver.com", // 개인 네이버아이디 @ naver.com
+        pass : "Gwanhoj931!" //개인 네이버 비밀번호
     },
     tls : {
         rejectUnauthorized : false 
