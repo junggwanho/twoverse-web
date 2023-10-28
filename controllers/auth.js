@@ -5,15 +5,10 @@ const User = require('../models/user')
 exports.signin = async (req, res, next) => {  // 데이터 받아서 결과 전송
     const username = req.body.userId;
     const password = req.body.userPassword;
-    const password2 = req.body.userPassword2;
 
     const sendData = { isSuccess: "" };
 
     try {
-        if(password === password2){
-            sendData.isSuccess = "비밀번호를 다시 확인해 주세요"
-            res.send(sendData);
-        }
         const exUser = await User.findOne({ where: { username } });
         if (!exUser) {
             const hash = await bcrypt.hash(password, 12);
