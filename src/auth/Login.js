@@ -4,6 +4,41 @@ import React, { useState } from 'react';
 function Login(props) {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleSubmit = async () => {
+    const userData = {
+      userId: id,
+      userPassword: password,
+    };
+    try {
+      const response = await fetch("http://localhost:3001/auth/login", {
+        method: "post",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (response.ok) {
+        const json = await response.json();
+        if (json.isLogin === "True") {
+          alert('로그인이 완료되었습니다!');
+          props.setMode("WELCOME");
+        } else {
+          alert(json.isLogin);
+          return; // submit 동작을 막음
+        }
+      } else {
+        alert('서버 요청에 문제가 있습니다.');
+        return; // submit 동작을 막음
+      }
+    } catch (error) {
+      console.error('오류 발생:', error);
+      alert('서버 요청 중 오류가 발생했습니다.');
+      return; // submit 동작을 막음
+    }
+  }
+
   return <>
     <div>
       <div className="login-page">
@@ -43,30 +78,9 @@ function Login(props) {
                   }}
                 >회원가입</h2>
               </div>
-              <button type="submit"
+              <button type="button"
                 className="btn btn-submit btn-default pull-right btn-login"
-                onClick={() => {
-                  const userData = {
-                    userId: id,
-                    userPassword: password,
-                  };
-                  fetch("http://localhost:3001/auth/login", {
-                    method: "post",
-                    headers: {
-                      "content-type": "application/json",
-                    },
-                    body: JSON.stringify(userData),
-                  })
-                    .then((res) => res.json())
-                    .then((json) => {
-                      if (json.isLogin === "True") {
-                        props.setMode("WELCOME");
-                      }
-                      else {
-                        alert(json.isLogin)
-                      }
-                    });
-                }}>
+                onClick={handleSubmit}>
                 Log in
               </button>
             </form>

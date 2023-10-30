@@ -48,10 +48,11 @@ exports.login = async (req, res, next) => {
             const isPasswordValid = await bcrypt.compare(password, exUser.password);
             if (isPasswordValid) {
                 console.log('로그인 성공');
-                sendData.isSuccess = "True";
+                sendData.isLogin = "True";
+                req.session.isLogined = true;
                 res.send(sendData);
             } else {
-                sendData.isSuccess = "비밀번호가 일치하지 않습니다";
+                sendData.isLogin = "비밀번호가 일치하지 않습니다";
                 res.send(sendData);
             }
         }
