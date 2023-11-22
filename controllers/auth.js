@@ -33,35 +33,6 @@ exports.signin = async (req, res, next) => {  // 데이터 받아서 결과 전�
     }
 }
 
-exports.login = async (req, res, next) => {
-    const username = req.body.userId;
-    const password = req.body.userPassword;
-
-    const sendData = { isSuccess: "" };
-
-    try {
-        const exUser = await User.findOne({ where: { username } });
-        if (!exUser) {
-            sendData.isSuccess = "사용자를 찾을 수 없습니다";
-            res.send(sendData);
-        } else {
-            const isPasswordValid = await bcrypt.compare(password, exUser.password);
-            if (isPasswordValid) {
-                console.log('로그인 성공');
-                sendData.isLogin = "True";
-                req.session.isLogined = true;
-                res.send(sendData);
-            } else {
-                sendData.isLogin = "비밀번호가 일치하지 않습니다";
-                res.send(sendData);
-            }
-        }
-    } catch (error) {
-        console.error(error);
-        return next(error);
-    }
-}
-
 exports.email = async (req, res) => {
     const sendData = {
         emailCheck: "",
@@ -107,4 +78,47 @@ exports.email = async (req, res) => {
         res.status(500).send('서버 오류');
     }
 };
+
+exports.login = async (req, res, next) => {
+    const username = req.body.userId;
+    const password = req.body.userPassword;
+
+    const sendData = { isSuccess: "" };
+
+    try {
+        const exUser = await User.findOne({ where: { username } });
+        if (!exUser) {
+            sendData.isSuccess = "사용자를 찾을 수 없습니다";
+            res.send(sendData);
+        } else {
+            const isPasswordValid = await bcrypt.compare(password, exUser.password);
+            if (isPasswordValid) {
+                console.log('로그인 성공');
+                sendData.isLogin = "True";
+                req.session.isLogined = true;
+                res.send(sendData);
+            } else {
+                sendData.isLogin = "비밀번호가 일치하지 않습니다";
+                res.send(sendData);
+            }
+        }
+    } catch (error) {
+        console.error(error);
+        return next(error);
+    }
+}
+
+exports.logout = async function(req, res) {
+    console.log('값을 받음');
+    req.session.destroy(function(err) {
+        if (err) {
+            console.error('세션 파기 중 오류 발생:', err);
+            res.status(500).send('서버 오류');
+        } else {
+            res.redirect('/');
+        }
+    });
+};
+
+
 

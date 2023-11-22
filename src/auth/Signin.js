@@ -52,6 +52,7 @@ function Signin(props) {
     }
   };
 
+
   const handlePasswordInputChange = (event) => {
     const value = event.target.value;
     setPassword(value); // 비밀번호 상태 업데이트
@@ -229,6 +230,12 @@ function Signin(props) {
                     <p style={{ color: 'green', fontSize: '11px' }}>{idValidMessage}</p>
                   )}
                 </div>
+                <input type="text"
+                  className="form-control form-control-email"
+                  placeholder="이름을 입력해주세요"
+                  value={id}
+                  onChange={handleIdInputChange}
+                />
                 <input type="password"
                   className="form-control form-control-password"
                   placeholder="비밀번호를 입력해주세요"
