@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import './Auth.css';
 
 function Login(props) {
   const [id, setId] = useState("");
@@ -44,7 +44,7 @@ function Login(props) {
       <div className="login-page">
         <div className="login-content login-content-signin">
           <div>
-            <h2>Log in</h2>
+            <h2 className='auth-font'>Log in</h2>
             <form className="wrapper-box" role="form">
               <div className="input-box">
                 <input type="text"
@@ -63,16 +63,16 @@ function Login(props) {
                   required />
               </div>
               <div className='find-join-group'>
-                <h2 className="outer-link pull-left"
+                <h2 className="auth-font outer-link pull-left"
                   onClick={() => {
                     props.setMode("FINDID");
                   }}>아이디 찾기</h2>
-                <h2 className="outer-link pull-left"
+                <h2 className="auth-font outer-link pull-left"
                   onClick={() => {
                     props.setMode("FINDPW");
                   }}
                 >비밀번호 찾기</h2>
-                <h2 className="outer-link pull-left"
+                <h2 className="auth-font outer-link pull-left"
                   onClick={() => {
                     props.setMode("SIGNIN");
                   }}

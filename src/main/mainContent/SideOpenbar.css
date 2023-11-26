@@ -1,0 +1,133 @@
+@font-face {
+    font-family: 'LINESeedKR-Bd';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+div {
+    font-family: 'LINESeedKR-Bd';
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+img {
+    /* position: relative;
+    right: 5px;
+    margin-top: 2px; */
+    width: 28px;
+    height: 28px;
+}
+
+.barContainer {
+    /* display: flex; */
+    height: 100%;
+    width: 360px;
+
+    .sideOpenbar {
+        background-color: #313a46;
+        padding: 20px;
+        color: #ffffff;
+        height: 100vh;
+        width: 360px;
+        transition: all 0.5s;
+
+        .top_section {
+            display: flex;
+            align-items: center;
+            /* justify-content: space-between;  */
+            padding: 20px 15px;
+
+            .logo {
+                position: relative;
+                top: 5px;
+                margin-left: 12px;
+            }
+
+            .logo img{
+                width: 50px;
+                height: 50px;
+            }
+
+            .bars {
+                display: flex;
+                font-size: 25px;
+                /* margin-left:20px; */
+            }
+        }
+
+        .menus {
+            min-height: 70vh;
+
+            .link_text {
+                font-size: 16px;
+            }
+
+            .link {
+                display: flex;
+                color: #8391a2;
+                padding: 10px 15px;
+                gap: 15px;
+                transition: all 0.5s;
+                text-decoration: none;
+                height: 50px;
+            }
+
+            .link svg {
+                position: relative;
+                top: 3px;
+                width: 20px;
+                height: 20px;
+                margin-right: 20px;
+            }
+
+            .link:hover {
+                /* background-color: rgb(78,86,91); */
+                font-weight: bold;
+                color: #bccee4;
+                height: 50px;
+                transition: 0.5s;
+            }
+
+            .active {
+                /* background: lightskyblue; */
+                color: #ffffff;
+
+            }
+        }
+
+        .bottom {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            font-size: 20px;
+            font-weight: 600;
+            color: #8391a2;
+            padding: 10px 15px;
+            justify-content: center;
+        }
+
+        .bottom:hover {
+            /* background-color: rgb(78,86,91); */
+            font-weight: bold;
+            color: #bccee4;
+            height: 50px;
+            transition: 0.5s;
+        }
+    }
+
+}
+
+.bars-close {
+    position: absolute;
+    margin-top: 23px;
+}
+
+main {
+    width: 100%;
+    padding: 20px;
+}

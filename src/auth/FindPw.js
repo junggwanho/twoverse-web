@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import './Auth.css';
 
 function FindPw(props) {
   const [id, setId] = useState("");
@@ -11,7 +11,7 @@ function FindPw(props) {
         <div className="login-page">
           <div className="login-content login-content-signin">
             <div>
-              <h2>FIND PASSWORD</h2>
+              <h2 className='auth-font'>FIND PASSWORD</h2>
               <form className="wrapper-box" role="form">
                 <div className="input-box">
                   <input type="text"
@@ -39,17 +39,17 @@ function FindPw(props) {
                 </div>
   
                 <div className='find-join-group'>
-                  <h2 className="outer-link pull-left"
+                  <h2 className="auth-font outer-link pull-left"
                     onClick={() => {
                       props.setMode("LOGIN");
                     }}
                   >로그인</h2>
-                  <h2 className="outer-link pull-left"
+                  <h2 className="auth-font outer-link pull-left"
                     onClick={() => {
                       props.setMode("SIGNIN");
                     }}
                   >회원가입</h2>
-                  <h2 className="outer-link pull-left"
+                  <h2 className="auth-font outer-link pull-left"
                     onClick={() => {
                       props.setMode("FINDID");
                     }}

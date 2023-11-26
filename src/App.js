@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import './App.css';
+
 
 import Login from './auth/Login';
 import Signin from './auth/Signin';
 import FindId from './auth/FindId';
 import FindPw from './auth/FindPw';
+import Main from './main/Main';
 
 
 function App() {
@@ -38,11 +39,7 @@ function App() {
     content = <FindPw setMode={setMode}></FindPw>
   }
   else if (mode === 'WELCOME') {
-    content = <>
-      <h2>메인 페이지에 오신 것을 환영합니다</h2>
-      <p>로그인에 성공하셨습니다.</p>
-      <a href="auth/logout">로그아웃</a>
-    </>
+    content = <Main setMode={setMode} />
   }
 
   return (

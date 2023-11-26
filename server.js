@@ -8,6 +8,8 @@ const passport = require('passport');
 const { sequelize } = require('./models');
 const passportConfig = require('./passport');
 const authRouter = require('./routes/auth');
+const userRouter = require('./routes/user');
+const unityRouter = require('./routes/unity/unity');
 
 dotenv.config(); // .env 파일을 사용하기 위한 설정
 
@@ -58,6 +60,10 @@ app.use('/authcheck', (req, res) => {
 
 // '/auth' 경로를 사용하는 라우터 추가
 app.use('/auth', authRouter);
+
+app.use('/user', userRouter);
+
+app.use('/unity', unityRouter);
 
 // 404 에러 핸들링 미들웨어
 app.use((req, res, next) => {

@@ -95,7 +95,12 @@ exports.login = async (req, res, next) => {
             if (isPasswordValid) {
                 console.log('로그인 성공');
                 sendData.isLogin = "True";
+
+                // Save user information in the session
                 req.session.isLogined = true;
+                req.session.userId = exUser.id; // assuming your User model has an 'id' property
+                req.session.username = exUser.username;
+
                 res.send(sendData);
             } else {
                 sendData.isLogin = "비밀번호가 일치하지 않습니다";

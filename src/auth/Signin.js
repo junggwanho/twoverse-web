@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './Auth.css';
 
 function Signin(props) {
   const [id, setId] = useState("");
@@ -213,7 +214,7 @@ function Signin(props) {
       <div className="login-page">
         <div className="login-content login-content-signin">
           <div>
-            <h2>Sign in</h2>
+            <h2 className='auth-font'>Sign in</h2>
             <form className="wrapper-box" role="form" id='signin-form'>
               <div className="input-box">
                 <input type="text"
@@ -287,17 +288,17 @@ function Signin(props) {
               </div>
 
               <div className='find-join-group'>
-                <h2 className="outer-link pull-left"
+                <h2 className="auth-font outer-link pull-left"
                   onClick={() => {
                     props.setMode("LOGIN");
                   }}
                 >로그인</h2>
-                <h2 className="outer-link pull-left"
+                <h2 className="auth-font outer-link pull-left"
                   onClick={() => {
                     props.setMode("FINDID");
                   }}
                 >아이디 찾기</h2>
-                <h2 className="outer-link pull-left"
+                <h2 className="auth-font outer-link pull-left"
                   onClick={() => {
                     props.setMode("FINDPW");
                   }}

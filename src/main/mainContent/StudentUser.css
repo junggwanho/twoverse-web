@@ -1,0 +1,27 @@
+
+.sidebar{
+    padding: 20px;
+    background-color: white;
+    margin-top: 0px;
+    margin-left: 13px;
+    -webkit-box-shadow: 0px 0px 12px -1px #000000;
+    box-shadow: 0px 0px 2px -1px #000000;
+}
+
+.studentUserList {
+    margin: 0;
+    list-style: none;
+    padding: 0px;
+}
+
+.studentUserListItem{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.studentUser{
+    display: flex;
+    justify-content: space-around;
+}
