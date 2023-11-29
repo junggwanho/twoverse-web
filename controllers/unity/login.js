@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const path = require('path');
-var appDir = path.dirname(require.main.filename);
+const appDir = path.dirname(require.main.filename);
+const User = require('../../models/user');
 
 exports.login = async (req, res, next) => {
     const id = req.body.userId;
@@ -19,12 +21,17 @@ exports.login = async (req, res, next) => {
                 console.log('로그인 성공');
                 sendData.isLogin = "True";
 
-                // Save user information in the session
-                req.session.isLogined = true;
-                req.session.userId = exUser.id; // assuming your User model has an 'id' property
-                req.session.username = exUser.username;
+                // 토큰 생성
+                const token = jwt.sign({ userId: exUser.id }, '여러분의_비밀_키', { expiresIn: '1h' });
 
-                res.send(sendData);
+                // 세션에 사용자 정보 및 토큰 저장
+                req.session.isLogined = true;
+                req.session.userId = exUser.id;
+                req.session.username = exUser.name;
+                req.session.token = token;
+
+                // 토큰을 Unity에 전송
+                res.json({ ...sendData, token });
             } else {
                 sendData.isLogin = "비밀번호가 일치하지 않습니다";
                 res.send(sendData);
@@ -34,4 +41,4 @@ exports.login = async (req, res, next) => {
         console.error(error);
         return next(error);
     }
-}
+};

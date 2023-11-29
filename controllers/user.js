@@ -25,3 +25,17 @@ exports.findUserName = async (req, res) => {
         res.status(401).json({ message: '인증되지 않았습니다.' });
     }
 };
+
+exports.findCheckNum = async (req, res) => {
+    const id = req.session.id
+    const User = await User.findOne({ where: { id } });
+    try {
+        if (User) {
+            const data = User.check_code;
+            res.send(data);
+        }
+    } catch{
+        res.status(401).json({ message: '인증되지 않았습니다.' });
+    }
+};
+
