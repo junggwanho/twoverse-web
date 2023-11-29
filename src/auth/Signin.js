@@ -3,6 +3,7 @@ import './Auth.css';
 
 function Signin(props) {
   const [id, setId] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [idErrorMessage, setIdErrorMessage] = useState("아이디를 입력해 주세요.");
@@ -52,6 +53,19 @@ function Signin(props) {
       setIdValidMessage("");
     }
   };
+
+  const handleNameInputChange = (event) => {
+    // 정규 표현식을 사용하여 한글 입력을 필터링하고 필요에 따라 수정
+    const value = event.target.value;
+    setName(value); // 아이디 상태 업데이트
+
+    // 값이 변경되었을 때만 에러 메시지 업데이트
+    if (value === "") {
+      setIdErrorMessage("이름을 입력해 주세요.");
+      setIdValidMessage("");
+    }
+  };
+  
 
 
   const handlePasswordInputChange = (event) => {
@@ -150,6 +164,11 @@ function Signin(props) {
       return; // submit 동작을 막음
     }
 
+    if (name.length === 0) {
+      alert('아이디를 입력해주세요.');
+      return; // submit 동작을 막음
+    }
+
     if (password.length === 0) {
       alert('비밀번호를 입력해주세요.');
       return; // submit 동작을 막음
@@ -172,7 +191,9 @@ function Signin(props) {
     // 비밀번호와 비밀번호 확인이 일치하는 경우 서버로 데이터 전송
     const userData = {
       userId: id,
+      userName: name,
       userPassword: password,
+      userEmail : email,
     };
 
     try {
@@ -234,8 +255,8 @@ function Signin(props) {
                 <input type="text"
                   className="form-control form-control-email"
                   placeholder="이름을 입력해주세요"
-                  value={id}
-                  onChange={handleIdInputChange}
+                  value={name}
+                  onChange={handleNameInputChange}
                 />
                 <input type="password"
                   className="form-control form-control-password"

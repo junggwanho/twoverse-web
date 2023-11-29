@@ -11,9 +11,9 @@
   font-weight: bold;
 }
 
-input {
+/* input {
   font-size: 16px;
-  /*margin-top: 40px;*/
+  margin-top: 40px;
   margin: 20px 0px 10px 0px;
   height: 30px;
   border: none;
@@ -23,7 +23,7 @@ input {
   box-shadow: none;
   -webkit-transition: all 0.1s ease-out;
   transition: all 0.1s ease-out;
-}
+} */
 
 p {
   margin: 0px;
@@ -44,13 +44,13 @@ input:focus:invalid {
 
 button.btn-login {
   display: inline-block;
-  margin-top: 50px;
+  margin-top: 30px;
   border: 2px solid #7ac142;
   background: #7ac142;
   border-radius: 25px;
-  padding: 3px 12px 5px 12px;
+  padding: 2px 10px 2px 10px;
   color: #fff;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
   letter-spacing: 0px;
   -webkit-transition: all 0.1s ease-out;
@@ -138,6 +138,10 @@ form.wrapper-box:-ms-input-placeholder {
   transition-delay: 0.2s;
 }
 
+input.form-control{
+  margin-top: 3px;
+}
+
 .login-content.login-content-signup.ng-hide:not(.ng-hide-animate) {
   transition-delay: 0s;
   display: block !important;
@@ -146,6 +150,7 @@ form.wrapper-box:-ms-input-placeholder {
   -webkit-transform: translate(-55%, -50%);
   transform: translate(-55%, -50%);
 }
+
 
 
 

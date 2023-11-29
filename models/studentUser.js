@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 
-class User extends Sequelize.Model {
+class StudentUser extends Sequelize.Model {
     static initiate(sequelize) {
-        User.init({
+        StudentUser.init({
             idx: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
@@ -21,30 +21,33 @@ class User extends Sequelize.Model {
                 type: Sequelize.STRING(255),
                 allowNull: false,
             },
-            email: {
-                type: Sequelize.STRING(255),
-                allowNull: false,
-                unique: true,
-            },
             check_code: {
                 type: Sequelize.STRING(255),
-                allowNull: true, 
-                unique: true,
+                allowNull: true,
+                references: {
+                    model: 'User',
+                    key: 'check_code',
+                },
+                onUpdate: 'CASCADE',
+                onDelete: 'SET NULL',
             },
         }, {
             sequelize,
             timestamps: true,
             underscored: false,
-            modelName: 'User',
-            tableName: 'User',
+            modelName: 'StudentUser',
+            tableName: 'student_users',
             paranoid: true,
             charset: 'utf8',
             collate: 'utf8_general_ci',
-        });
+        }); 
     }
+
     static associate(models) {
-        User.hasMany(models.StudentUser, { foreignKey: 'check_code' });
+        StudentUser.belongsTo(models.User, { foreignKey: 'check_code' });
+        StudentUser.hasOne(models.StudentUserScore, { foreignKey: 'student_user_idx', onDelete: 'CASCADE' });
+        StudentUser.hasOne(models.StudentUserProgress, { foreignKey: 'student_user_idx', onDelete: 'CASCADE' });
     }
 }
 
-module.exports = User;
+module.exports = StudentUser;

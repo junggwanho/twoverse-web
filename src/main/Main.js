@@ -8,7 +8,7 @@ import styled from "styled-components";
 import { Button, Navbar, Container, Nav, NavDropdown, Carousel, Offcanvas, Form } from 'react-bootstrap';
 
 const MainCotainer = styled.div`
-    max-height: 100vh;
+    max-height: 98%;
 `
 
 function Main() {
