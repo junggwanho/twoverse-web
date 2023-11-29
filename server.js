@@ -1,5 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 const morgan = require('morgan');
 const path = require('path');
 const session = require('express-session');
@@ -14,6 +15,11 @@ const unityRouter = require('./routes/unity/unity');
 dotenv.config(); // .env 파일을 사용하기 위한 설정
 
 const app = express();
+
+app.use(cors({
+    origin: '*', // 모든 출처 허용 옵션. true 를 써도 된다.
+}));
+
 passportConfig(); // 패스포트 설정
 app.set('port', process.env.PORT || 3001);
 
