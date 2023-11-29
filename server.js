@@ -38,8 +38,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(session({
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
     secret: process.env.COOKIE_SECRET,
     cookie: {
         httpOnly: true,
@@ -56,7 +56,7 @@ app.get('/', (req, res) => {
 });
 app.use('/authcheck', (req, res) => {
     const sendData = { isLogin: "" };
-    if (req.session.is_logined) {
+    if (req.session.isLogined) {
         sendData.isLogin = "True"
     } else {
         sendData.isLogin = "False"

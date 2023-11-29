@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 
-class StudentUser extends Sequelize.Model {
+class ProgressQuiz extends Sequelize.Model {
     static initiate(sequelize) {
-        StudentUser.init({
+        ProgressQuiz.init({
             idx: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
@@ -34,4 +34,4 @@ class StudentUser extends Sequelize.Model {
     }
 }
 
-module.exports = StudentUser;
+module.exports = ProgressQuiz;

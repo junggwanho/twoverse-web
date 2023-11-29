@@ -3,6 +3,6 @@ const router = express.Router();
 
 const { findUserName } = require('../controllers/user');
 
-router.post('/findUserName', findUserName);
+router.get('/findUserName', findUserName);
 
 module.exports = router;

@@ -47,6 +47,7 @@ class StudentUser extends Sequelize.Model {
         StudentUser.belongsTo(models.User, { foreignKey: 'check_code' });
         StudentUser.hasOne(models.StudentUserScore, { foreignKey: 'student_user_idx', onDelete: 'CASCADE' });
         StudentUser.hasOne(models.StudentUserProgress, { foreignKey: 'student_user_idx', onDelete: 'CASCADE' });
+        StudentUser.hasOne(models.Feedback, { foreignKey: 'student_user_idx', onDelete: 'CASCADE' });
     }
 }
 
