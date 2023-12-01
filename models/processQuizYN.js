@@ -1,20 +1,17 @@
 const Sequelize = require('sequelize');
 
-class ProcessQuiz extends Sequelize.Model {
+class ProcessQuizYN extends Sequelize.Model {
     static initiate(sequelize) {
-        ProcessQuiz.init({
+        ProcessQuizYN.init({
             idx: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: true,
             },
-            process: {
+            quiz_idx: {
                 type: Sequelize.STRING(16),
-                allowNull: false,
-            },
-            quiz: {
-                type: Sequelize.STRING(255),
-                allowNull: true,
+                al1lowNull: false,
+                unique: true
             },
             quizYN: {
                 type: Sequelize.STRING(255), 
@@ -24,8 +21,8 @@ class ProcessQuiz extends Sequelize.Model {
             sequelize,
             timestamps: true,
             underscored: false,
-            modelName: 'processQuiz',
-            tableName: 'process_quiz',
+            modelName: 'processQuizYN',
+            tableName: 'process_quiz_YN',
             paranoid: true,
             charset: 'utf8',
             collate: 'utf8_general_ci',
@@ -33,4 +30,4 @@ class ProcessQuiz extends Sequelize.Model {
     }
 }
 
-module.exports = ProcessQuiz;
+module.exports = ProcessQuizYN;
