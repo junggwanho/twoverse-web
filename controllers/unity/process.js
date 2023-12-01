@@ -22,9 +22,9 @@ exports.OBJexplain = async (req, res) => {
 
 exports.OBJquiz = async (req, res) => {
     try {
-        const processQuiz = await processQuiz.findAll({ where: { process: req.body.process } });
-        if (processData) {
-            const processQuizData = processQuiz.map(processQuiz => ({ quiz: processQuiz.quiz, idx: processQuiz.idx,  quizYN: processQuiz.quizYN}));
+        const Quiz = await processQuiz.findAll({ where: { process: req.body.process } });
+        if (Quiz) {
+            const processQuizData = processQuiz.map(Quiz => ({ quiz: Quiz.quiz, idx: Quiz.idx,  quizYN: Quiz.quizYN}));
             res.json(processQuizData);
         } else {
             res.status(401).json({ message: '인증되지 않았습니다.' });
