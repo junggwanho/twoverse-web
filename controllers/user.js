@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const studentUser = require('../models/studentUser')
 
 exports.findUserName = async (req, res) => {
     if (req.session && req.session.username) {
@@ -26,16 +27,37 @@ exports.findUserName = async (req, res) => {
     }
 };
 
-exports.findCheckNum = async (req, res) => {
-    const id = req.session.id
-    const User = await User.findOne({ where: { id } });
+exports.findCheckCode = async (req, res) => {
+
     try {
-        if (User) {
-            const data = User.check_code;
+        const exUser = await User.findOne({ where: { id: req.session.userId } });
+        if (exUser) {
+            const data = { checkCode: exUser.check_code };
+            console.log(data);
             res.send(data);
         }
-    } catch{
+    } catch {
         res.status(401).json({ message: '인증되지 않았습니다.' });
+    }
+
+};
+
+exports.studentuserList = async (req, res) => {
+    console.log('1');
+    try {
+        const exUser = await User.findOne({ where: { id: req.session.userId } });
+        console.log('1');
+        if (exUser) {
+            const checkCode = exUser.check_code;
+            const studentUsers = await studentUser.findAll({ where: { check_code: checkCode } });
+            const studentList = studentUsers.map(user => ({ name: user.name, id: user.idx }));
+            res.json(studentList);
+        } else {
+            res.status(401).json({ message: '인증되지 않았습니다.' });
+        }
+    } catch (error) {
+        console.error('Error fetching student user list:', error);
+        res.status(500).json({ message: '서버 오류가 발생했습니다.' });
     }
 };
 

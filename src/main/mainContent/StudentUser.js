@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import Button from '../../common/Button';
 import './StudentUser.css';
@@ -22,54 +22,28 @@ const StyleButton = styled(Button)`
 `;
 
 export default function StudentUser() {
-    const initialStudentList = [
-        { id: 1, name: '이상욱' },
-        { id: 2, name: '최이제' },
-        { id: 3, name: '김동건' },
-        { id: 4, name: 'Jane Park' },
-        { id: 1, name: '이상욱' },
-        { id: 2, name: '최이제' },
-        { id: 3, name: '김동건' },
-        { id: 4, name: 'Jane Park' },{ id: 1, name: '이상욱' },
-        { id: 2, name: '최이제' },
-        { id: 3, name: '김동건' },
-        { id: 4, name: 'Jane Park' },{ id: 1, name: '이상욱' },
-        { id: 2, name: '최이제' },
-        { id: 3, name: '김동건' },
-        { id: 4, name: 'Jane Park' },{ id: 1, name: '이상욱' },
-        { id: 2, name: '최이제' },
-        { id: 3, name: '김동건' },
-        { id: 4, name: 'Jane Park' },{ id: 1, name: '이상욱' },
-        { id: 2, name: '최이제' },
-        { id: 3, name: '김동건' },
-        { id: 4, name: 'Jane Park' },{ id: 1, name: '이상욱' },
-        { id: 2, name: '최이제' },
-        { id: 3, name: '김동건' },
-        { id: 4, name: 'Jane Park' },{ id: 1, name: '이상욱' },
-        { id: 2, name: '최이제' },
-        { id: 3, name: '김동건' },
-        { id: 4, name: 'Jane Park' },{ id: 1, name: '이상욱' },
-        { id: 2, name: '최이제' },
-        { id: 3, name: '김동건' },
-        { id: 4, name: 'Jane Park' },{ id: 1, name: '이상욱' },
-        { id: 2, name: '최이제' },
-        { id: 3, name: '김동건' },
-        { id: 4, name: 'Jane Park' },{ id: 1, name: '이상욱' },
-        { id: 2, name: '최이제' },
-        { id: 3, name: '김동건' },
-        { id: 4, name: 'Jane Park' },{ id: 1, name: '이상욱' },
-        { id: 2, name: '최이제' },
-        { id: 3, name: '김동건' },
-        { id: 4, name: 'Jane Park' },{ id: 1, name: '이상욱' },
-        { id: 2, name: '최이제' },
-        { id: 3, name: '김동건' },
-        { id: 4, name: 'Jane Park' },
 
-    ];
 
+    const [initialStudentList, setInitialStudentList] = useState([]);
     const [studentList, setStudentList] = useState(initialStudentList);
     const [selectedStudentId, setSelectedStudentId] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
+
+    useEffect(() => {
+        const fetchStudentUserList = async () => {
+            try {
+                const response = await fetch("http://localhost:3001/user/studentuserList");
+                const json = await response.json();
+
+                setInitialStudentList(json);
+                setStudentList(json);
+            } catch (error){
+                console.error('Error fetchin student user list:', error);
+            }
+        };
+
+        fetchStudentUserList();
+    }, []);
 
     const handleStudentClick = (id) => {
         setSelectedStudentId(id);

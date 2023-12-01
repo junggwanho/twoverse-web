@@ -22,7 +22,7 @@ exports.login = async (req, res, next) => {
                 sendData.isLogin = "True";
 
                 // 토큰 생성
-                const token = jwt.sign({ userId: exUser.id }, '여러분의_비밀_키', { expiresIn: '1h' });
+                const token = jwt.sign({ userId: exUser.id }, 'COOKIE_SECRET', { expiresIn: '1h' });
 
                 // 세션에 사용자 정보 및 토큰 저장
                 req.session.isLogined = true;

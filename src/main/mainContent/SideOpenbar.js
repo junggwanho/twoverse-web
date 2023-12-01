@@ -1,10 +1,31 @@
 import React from "react";
 import { NavLink } from 'react-router-dom';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import twoverse from '../../img/logo.png';
 import './SideOpenbar.css';
 
 export default function SideOpenbar({ children }) {
+
+    const copyToClipboard = (text) => {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+    };
+
+    const pasteCheckCode = async () => {
+        try {
+            const response = await fetch("http://localhost:3001/user/findCheckCode");
+            const data = await response.json();
+            copyToClipboard(data.checkCode);
+            alert("인증키가 복사되었습니다");
+            // alert(checkCode);
+        } catch (error) {
+            console.error('사용자 데이터 및 체크 코드를 가져오는 중 오류 발생:', error);
+        }
+    }
 
     return (
         <div className="barContainer">
@@ -39,7 +60,8 @@ export default function SideOpenbar({ children }) {
                     </NavLink>
                 </div>
                 <hr />
-                <div className="bottom">
+                <div className="bottom"
+                onClick={pasteCheckCode}>
                     인증키 클릭
                 </div>
             </div>

@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 
-class ProgressQuiz extends Sequelize.Model {
+class ProcessQuiz extends Sequelize.Model {
     static initiate(sequelize) {
-        ProgressQuiz.init({
+        ProcessQuiz.init({
             idx: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
@@ -25,8 +25,8 @@ class ProgressQuiz extends Sequelize.Model {
             sequelize,
             timestamps: true,
             underscored: false,
-            modelName: 'progressQuiz',
-            tableName: 'progress_quiz',
+            modelName: 'processQuiz',
+            tableName: 'process_quiz',
             paranoid: true,
             charset: 'utf8',
             collate: 'utf8_general_ci',
@@ -34,4 +34,4 @@ class ProgressQuiz extends Sequelize.Model {
     }
 }
 
-module.exports = ProgressQuiz;
+module.exports = ProcessQuiz;
