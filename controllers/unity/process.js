@@ -24,7 +24,7 @@ exports.OBJquiz = async (req, res) => {
     try {
         const Quiz = await processQuiz.findAll({ where: { process: req.body.process } });
         if (Quiz) {
-            const processQuizData = processQuiz.map(Quiz => ({ quiz: Quiz.quiz, idx: Quiz.idx,  quizYN: Quiz.quizYN}));
+            const processQuizData = Quiz.map(processQuiz => ({ quiz: processQuiz.quiz, idx: processQuiz.idx,  quizYN: processQuiz.quizYN}));
             res.json(processQuizData);
         } else {
             res.status(401).json({ message: '인증되지 않았습니다.' });

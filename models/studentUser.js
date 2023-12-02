@@ -48,6 +48,9 @@ class StudentUser extends Sequelize.Model {
         StudentUser.hasOne(models.StudentUserScore, { foreignKey: 'student_user_idx', onDelete: 'CASCADE' });
         StudentUser.hasOne(models.StudentUserProgress, { foreignKey: 'student_user_idx', onDelete: 'CASCADE' });
         StudentUser.hasOne(models.Feedback, { foreignKey: 'student_user_idx', onDelete: 'CASCADE' });
+
+        // 추가: ProcessQuizYN 모델과의 관계 설정
+        StudentUser.hasOne(models.ProcessQuizYN, { foreignKey: 'student_user_idx', onDelete: 'CASCADE' });
     }
 }
 

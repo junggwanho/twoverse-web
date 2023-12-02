@@ -10,23 +10,35 @@ class ProcessQuizYN extends Sequelize.Model {
             },
             quiz_idx: {
                 type: Sequelize.STRING(16),
-                al1lowNull: false,
+                allowNull: false,
                 unique: true
             },
             quizYN: {
-                type: Sequelize.STRING(255), 
+                type: Sequelize.STRING(255),
                 allowNull: false,
+            },
+            student_user_idx: {
+                type: Sequelize.INTEGER,
+                references: {
+                    model: 'student_users', // 참조할 모델의 이름
+                    key: 'idx', // 참조할 모델의 외래 키
+                },
+                onUpdate: 'CASCADE',
+                onDelete: 'CASCADE',
             },
         }, {
             sequelize,
             timestamps: true,
             underscored: false,
-            modelName: 'processQuizYN',
+            modelName: 'ProcessQuizYN',
             tableName: 'process_quiz_YN',
             paranoid: true,
             charset: 'utf8',
             collate: 'utf8_general_ci',
-        }); 
+        });
+    }
+    static associate(models) {
+        ProcessQuizYN.belongsTo(models.StudentUser, { foreignKey: 'student_user_idx', onDelete: 'CASCADE' });
     }
 }
 
