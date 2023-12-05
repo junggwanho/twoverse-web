@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import './Auth.css';
+import { NavLink, useNavigate } from 'react-router-dom';
+import '../Auth.css';
 
-function Login(props) {
+function Login() {
+  const navigate = useNavigate();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
 
@@ -11,7 +13,7 @@ function Login(props) {
       userPassword: password,
     };
     try {
-      const response = await fetch("http://localhost:3001/auth/login", {
+      const response = await fetch("http://localhost:3001/auth/student/login", {
         method: "post",
         headers: {
           "content-type": "application/json",
@@ -23,7 +25,8 @@ function Login(props) {
         const json = await response.json();
         if (json.isLogin === "True") {
           alert('로그인이 완료되었습니다!');
-          props.setMode("WELCOME");
+          navigate("/"); // 로그인 성공 후 홈 화면으로 이동
+          window.location.reload();
         } else {
           alert(json.isLogin);
           return; // submit 동작을 막음
@@ -39,7 +42,7 @@ function Login(props) {
     }
   }
 
-  return <>
+  return (
     <div>
       <div className="login-page">
         <div className="login-content login-content-signin">
@@ -47,40 +50,35 @@ function Login(props) {
             <h2 className='auth-font'>Log in</h2>
             <form className="wrapper-box" role="form">
               <div className="input-box">
-                <input type="text"
+                <input
+                  type="text"
                   className="form-control form-control-email"
                   placeholder="아이디를 입력해주세요"
-                  onChange={event => {
+                  onChange={(event) => {
                     setId(event.target.value);
                   }}
-                  required />
-                <input type="password"
+                  required
+                />
+                <input
+                  type="password"
                   className="form-control form-control-password"
                   placeholder="비밀번호를 입력해주세요"
-                  onChange={event => {
+                  onChange={(event) => {
                     setPassword(event.target.value);
                   }}
-                  required />
+                  required
+                />
               </div>
               <div className='find-join-group'>
-                <h2 className="auth-font outer-link pull-left"
-                  onClick={() => {
-                    props.setMode("FINDID");
-                  }}>아이디 찾기</h2>
-                <h2 className="auth-font outer-link pull-left"
-                  onClick={() => {
-                    props.setMode("FINDPW");
-                  }}
-                >비밀번호 찾기</h2>
-                <h2 className="auth-font outer-link pull-left"
-                  onClick={() => {
-                    props.setMode("SIGNIN");
-                  }}
-                >회원가입</h2>
+                <NavLink className="link" activeClassName="active" to="/student/Signin">
+                  <h2 className="auth-font outer-link pull-left">회원가입</h2>
+                </NavLink>
               </div>
-              <button type="button"
+              <button
+                type="button"
                 className="btn btn-submit btn-default pull-right btn-login"
-                onClick={handleSubmit}>
+                onClick={handleSubmit}
+              >
                 Log in
               </button>
             </form>
@@ -88,7 +86,7 @@ function Login(props) {
         </div>
       </div>
     </div>
-  </>
+  );
 }
 
 export default Login;

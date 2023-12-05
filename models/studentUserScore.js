@@ -27,10 +27,6 @@ class StudentUserScore extends Sequelize.Model {
                     type: Sequelize.INTEGER,
                     allowNull: true,
                 },
-                process_score_five: {
-                    type: Sequelize.INTEGER,
-                    allowNull: true, 
-                },
                 student_user_idx: {
                     type: Sequelize.INTEGER,
                     references: {
@@ -39,7 +35,7 @@ class StudentUserScore extends Sequelize.Model {
                     },
                     onUpdate: 'CASCADE',
                     onDelete: 'CASCADE',
-                },
+                }, 
             },
             {
                 sequelize,

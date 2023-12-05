@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 import { CardBody } from 'react-bootstrap';
 
 
-export default function ProgressBarList() {
+export default function ProgressBarList({ mainSelectedStudentId }) {
     const [nowStep, setNowStep] = useState(60);
     const totalStep = 100;
 

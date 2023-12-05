@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Chart.css'
 import {
     BarChart, Bar,
@@ -12,45 +12,38 @@ import {
 } from 'recharts'
 import Card from 'react-bootstrap/Card';
 
-export default function Chart() {
+export default function Chart({ mainSelectedStudentId }) {
+    const [data, setUserData] = useState([]);
 
-    const data = [
-        {
-            name: '1공정',
-            'User Score': 80,
-            'Average Score': 88,
-        },
-        {
-            name: '2공정',
-            'User Score': 20,
-            'Average Score': 88,
-        },
-        {
-            name: '3공정',
-            'User Score': 40,
-            'Average Score': 88,
-        },
-        {
-            name: '4공정',
-            'User Score': 90,
-            'Average Score': 88,
-        },
-        {
-            name: '5공정',
-            'User Score': 90,
-            'Average Score': 88,
-        },
-    ]
+    useEffect(() => {
+        // 웹이 시작하자마자 mainSelectedStudentId를 이용하여 데이터를 가져오는 함수 호출
+        fetchData(mainSelectedStudentId);
+    }, [mainSelectedStudentId]);
+
+    const fetchData = async (studentId) => {
+        try {
+            // TODO: 서버에서 데이터 가져오는 API 호출
+            const response = await fetch(`http://localhost:3001/user/chart/${studentId}`);
+            const json = await response.json();
+            console.log(json);
+            setUserData(json);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    useEffect(() => {
+        console.log(data); // data가 업데이트될 때마다 출력
+    }, [data]);
 
     return (
-        <Card style={{marginBottom: '0px', width: '100%', height: "100%"}}>
+        <Card style={{ marginBottom: '0px', width: '100%', height: "100%" }}>
             <div className="chart">
-                {/* <h3 className='chartTitle'>공정 평가 대시보드</h3> */}
                 <Card.Body>
                     <Card.Title>
                         <h6>공정 평가 대시보드</h6>
                     </Card.Title>
-                    <hr/>
+                    <hr />
                     <ResponsiveContainer className="BarChartContainer" width="100%" aspect={5 / 1}>
                         <BarChart
                             width={500}
@@ -75,4 +68,5 @@ export default function Chart() {
         </Card>
     )
 }
+
 

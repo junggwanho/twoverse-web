@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import './Auth.css';
+import { NavLink, useNavigate } from 'react-router-dom';
+import '../Auth.css';
 
-function Signin(props) {
+function Signin() {
+  const navigate = useNavigate();
+
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -65,7 +68,7 @@ function Signin(props) {
       setIdValidMessage("");
     }
   };
-  
+
 
 
   const handlePasswordInputChange = (event) => {
@@ -193,7 +196,7 @@ function Signin(props) {
       userId: id,
       userName: name,
       userPassword: password,
-      userEmail : email,
+      userEmail: email,
     };
 
     try {
@@ -209,7 +212,9 @@ function Signin(props) {
         const json = await response.json();
         if (json.isSuccess === "True") {
           alert('회원가입이 완료되었습니다!');
-          props.setMode("LOGIN");
+
+          // useHistory를 사용하여 "/teacher/login"으로 이동합니다.
+          navigate("/teacher/login");
         } else {
           alert(json.isSuccess);
           return; // submit 동작을 막음
@@ -309,21 +314,12 @@ function Signin(props) {
               </div>
 
               <div className='find-join-group'>
-                <h2 className="auth-font outer-link pull-left"
-                  onClick={() => {
-                    props.setMode("LOGIN");
-                  }}
-                >로그인</h2>
-                <h2 className="auth-font outer-link pull-left"
-                  onClick={() => {
-                    props.setMode("FINDID");
-                  }}
-                >아이디 찾기</h2>
-                <h2 className="auth-font outer-link pull-left"
-                  onClick={() => {
-                    props.setMode("FINDPW");
-                  }}
-                >비밀번호 찾기</h2>
+
+                <NavLink className="link"
+                  activeclassName="active"
+                  to="teacher/Login"><h2 className="auth-font outer-link pull-left"
+                  >로그인</h2>
+                </NavLink>
               </div>
               <button type="button"
                 className="btn btn-submit btn-default pull-right btn-login"

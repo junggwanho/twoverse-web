@@ -1,4 +1,5 @@
 import './Dashboard.css';
+import React, { useState, useEffect } from 'react';
 // import button from "./img/button.png"
 import Chart from './dashboardContent/Chart';
 import InputBox from './dashboardContent/InputBox';
@@ -19,29 +20,34 @@ const DashboardContainer = styled.div`
 
 
 export default function Dashbord() {
+    const [mainSelectedStudentId, setMainSelectedStudentId] = useState(1);
+
+    const handleMainStudentClick = async (selectedStudentId) => {
+        await setMainSelectedStudentId(selectedStudentId);
+    };
     return (
         <DashboardContainer>
             <div className="body-container">
                 <Container style={{position:"relative", right:"80px" ,width:"90%", height:"70%"}}>
                     <Row>
                         <Col style={{position:"relative", bottom: "30px"}}>
-                            <Chart />
+                            <Chart mainSelectedStudentId={mainSelectedStudentId}/>
                         </Col>
                     </Row>
                     <Row>
                         <Col style={{position:"relative", bottom: "20px"}}
                         md="4">
-                            <ProgressBarList />
+                            <ProgressBarList mainSelectedStudentId={mainSelectedStudentId}/>
                         </Col>
                         <Col style={{position:"relative", bottom: "20px"}}
                         md="8">
-                            <InputBox />
+                            <InputBox mainSelectedStudentId={mainSelectedStudentId}/>
                         </Col>
                     </Row>
                 </Container>
             </div>
             <div className='Student-userlist'>
-                    <StudentUser/>
+                    <StudentUser onStudentClick={handleMainStudentClick} />
             </div>
         </DashboardContainer>
     );

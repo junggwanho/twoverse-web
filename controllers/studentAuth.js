@@ -6,39 +6,32 @@ const path = require('path');
 var appDir = path.dirname(require.main.filename);
 
 const User = require('../models/user')
+const studentUser = require('../models/studentUser')
 
-exports.signin = async (req, res, next) => {  // 데이터 받아서 결과 전송
-    
-    const generateRandomKey = () => {
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        let randomKey = '';
-      
-        for (let i = 0; i < 6; i++) {
-          const randomIndex = Math.floor(Math.random() * characters.length);
-          randomKey += characters.charAt(randomIndex);
-        }
-      
-        return randomKey;
-      };
+exports.studentSignin = async (req, res, next) => {  // 데이터 받아서 결과 전송
 
     const id = req.body.userId;
     const name = req.body.userName;
     const password = req.body.userPassword;
-    const email = req.body.userEmail;
-    const check_code = generateRandomKey();
+    const check_Code = req.body.userCheckCode;
+
+    // console.log(checkCode);
 
     const sendData = { isSuccess: "" };
 
     try {
-        const exUser = await User.findOne({ where: { id } });
-        if (!exUser) {
+        const exUser = await User.findOne( {where: {check_Code} });
+        if (exUser){
+            sendData.isSuccess = "존재하지 않은 선생의 인증키 입니다"
+        }
+        const StUser = await studentUser.findOne({ where: { id } });
+        if (!StUser) {
             const hash = await bcrypt.hash(password, 12);
-            await User.create({
+            await studentUser.create({
                 id,
                 name,
                 password: hash,
-                email,
-                check_code,
+                check_Code,
             });
             sendData.isSuccess = "True"
             await res.send(sendData);
@@ -52,60 +45,14 @@ exports.signin = async (req, res, next) => {  // 데이터 받아서 결과 전�
     }
 }
 
-exports.email = async (req, res) => {
-    const sendData = {
-        emailCheck: "",
-        userCheck: ""
-    };
-
-    try {
-        let authNum = Math.random().toString().substring(2, 6);
-        let emailTemplate;
-        ejs.renderFile(appDir + '/template/authMail.ejs', { authCode: authNum }, function (err, data) {
-            if (err) {
-                console.log(err);
-            }
-            emailTemplate = data;
-        });
-
-        let transporter = nodemailer.createTransport({
-            service: 'naver',
-            host: 'smtp.naver.com',
-            port: 587,
-            secure: false,
-            auth: {
-                user: 'rhksgh1222@naver.com',
-                pass: process.env.NODEMAILER_PASS,
-            },
-        });
-
-        let mailOptions = await transporter.sendMail({
-            from: '"정관호" <rhksgh1222@naver.com>',
-            to: req.body.userEmail,
-            subject: '회원가입을 위한 인증번호를 입력해주세요.',
-            html: emailTemplate,
-        });
-
-        transporter.sendMail(mailOptions, function () {
-            sendData.emailCheckNum = authNum;
-            sendData.emailCheck = "True";
-            res.send(sendData);
-            transporter.close();
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('서버 오류');
-    }
-};
-
-exports.login = async (req, res, next) => {
+exports.studentLogin = async (req, res, next) => {
     const id = req.body.userId;
     const password = req.body.userPassword;
 
     const sendData = { isSuccess: "" };
 
     try {
-        const exUser = await User.findOne({ where: { id } });
+        const exUser = await studentUser.findOne({ where: { id } });
         if (!exUser) {
             sendData.isSuccess = "사용자를 찾을 수 없습니다";
             res.send(sendData);

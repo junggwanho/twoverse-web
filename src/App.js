@@ -1,50 +1,40 @@
 import { useEffect, useState } from 'react';
 
 
-import Login from './auth/Login';
-import Signin from './auth/Signin';
-import FindId from './auth/FindId';
-import FindPw from './auth/FindPw';
+import AuthMode from './auth/AuthMode';
 import Main from './main/Main';
 
 
+// ... (이전 코드)
+
 function App() {
-  const [mode, setMode] = useState("LOGIN");
+  const [mode, setMode] = useState("AuthMode");
 
   useEffect(() => {
     fetch("http://localhost:3001/authcheck")
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return res.json();
+      })
       .then((json) => {
         if (json.isLogin === "True") {
           setMode("WELCOME");
+        } else {
+          setMode("AuthMode");
         }
-        else {
-          setMode("LOGIN");
-        }
+      })
+      .catch((error) => {
+        console.error("Network request failed:", error);
+        setMode("AuthMode");
       });
   }, []);
 
-  let content = null;
-
-  if (mode === "LOGIN") {
-    content = <Login setMode={setMode}></Login>
-  }
-  else if (mode === 'SIGNIN') {
-    content = <Signin setMode={setMode}></Signin>
-  }
-  else if (mode === 'FINDID') {
-    content = <FindId setMode={setMode}></FindId>
-  }
-  else if (mode === 'FINDPW') {
-    content = <FindPw setMode={setMode}></FindPw>
-  }
-  else if (mode === 'WELCOME') {
-    content = <Main setMode={setMode} />
-  }
-
   return (
     <>
-      {content}
+      {mode === "AuthMode" && <AuthMode setMode={setMode} />}
+      {mode === "WELCOME" && <Main setMode={setMode} />}
     </>
   );
 }

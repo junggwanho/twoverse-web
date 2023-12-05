@@ -21,7 +21,7 @@ const StyleButton = styled(Button)`
         `}
 `;
 
-export default function StudentUser() {
+export default function StudentUser({onStudentClick}) {
 
 
     const [initialStudentList, setInitialStudentList] = useState([]);
@@ -45,8 +45,10 @@ export default function StudentUser() {
         fetchStudentUserList();
     }, []);
 
-    const handleStudentClick = (id) => {
-        setSelectedStudentId(id);
+    const handleStudentClick = async (id) => {
+        console.log(id);
+        await setSelectedStudentId(id);
+        onStudentClick(id);
     };
 
     let searchTimer; // 타이머 변수 추가
