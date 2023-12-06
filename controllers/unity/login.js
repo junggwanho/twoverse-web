@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 const appDir = path.dirname(require.main.filename);
-const User = require('../../models/user');
+const studentUser = require('../../models/studentUser');
 
 exports.login = async (req, res, next) => {
     const id = req.body.userId;
@@ -11,7 +11,7 @@ exports.login = async (req, res, next) => {
     const sendData = { isSuccess: "" };
 
     try {
-        const exUser = await User.findOne({ where: { id } });
+        const exUser = await studentUser.findOne({ where: { id } });
         if (!exUser) {
             sendData.isSuccess = "사용자를 찾을 수 없습니다";
             res.send(sendData);

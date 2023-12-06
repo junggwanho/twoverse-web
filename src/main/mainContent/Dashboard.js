@@ -20,7 +20,7 @@ const DashboardContainer = styled.div`
 
 
 export default function Dashbord() {
-    const [mainSelectedStudentId, setMainSelectedStudentId] = useState(1);
+    const [mainSelectedStudentId, setMainSelectedStudentId] = useState(21);
 
     const handleMainStudentClick = async (selectedStudentId) => {
         await setMainSelectedStudentId(selectedStudentId);

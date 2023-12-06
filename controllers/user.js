@@ -2,6 +2,7 @@ const User = require('../models/user');
 const studentUser = require('../models/studentUser');
 const Feedback = require('../models/feedback');
 const StudentUserScore = require('../models/studentUserScore');
+const StudentUserProgress = require('../models/studentUserPorgress');
 
 exports.findUserName = async (req, res) => {
     if (req.session && req.session.username) {
@@ -175,6 +176,49 @@ exports.findStudentUserChart = async (req, res) => {
         // Implement your logic to calculate the average
         // For example, you can return a static value for demonstration purposes
         return 88;
+    }
+}
+
+exports.findStudentUserProgress = async (req, res) => {
+
+    const { studentId } = req.params;
+
+    // Assuming there is a model named StudentUser representing the student_user_idx
+    const exstudentUser = await studentUser.findOne({
+        where: { idx: studentId },
+    });
+
+    try {
+        if (exstudentUser) {
+            const exStudentUserProgress = await StudentUserProgress.findOne({
+                where: { student_user_idx: studentId },
+            });
+
+            if (exStudentUserProgress) {
+                const progressScoreOne = exStudentUserProgress.progress_one;
+                const progressScoreTwo = exStudentUserProgress.progress_two;
+                const progressScoreThree = exStudentUserProgress.progress_three;
+                const progressScoreFour = exStudentUserProgress.progress_four;
+
+                // Manually create a list with custom names
+                const data = {
+                    stepOne: progressScoreOne,
+                    stepTwo: progressScoreTwo,
+                    stepThree: progressScoreThree,
+                    stepFour: progressScoreFour,
+                };;
+                console.log(data);
+                res.send(data);
+            } else {
+                res.send();
+            }
+        } else {
+            // If no student is found with the given studentId
+            res.status(404).json({ error: 'Student not found' });
+        }
+    } catch (error) {
+        console.error('Error finding student user scores:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 }
 

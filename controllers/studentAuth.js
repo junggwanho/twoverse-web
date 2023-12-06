@@ -13,14 +13,14 @@ exports.studentSignin = async (req, res, next) => {  // 데이터 받아서 결�
     const id = req.body.userId;
     const name = req.body.userName;
     const password = req.body.userPassword;
-    const check_Code = req.body.userCheckCode;
+    const check_code = req.body.userCheckCode;
 
     // console.log(checkCode);
 
     const sendData = { isSuccess: "" };
 
     try {
-        const exUser = await User.findOne( {where: {check_Code} });
+        const exUser = await User.findOne( {where: {check_code} });
         if (exUser){
             sendData.isSuccess = "존재하지 않은 선생의 인증키 입니다"
         }
@@ -31,7 +31,7 @@ exports.studentSignin = async (req, res, next) => {  // 데이터 받아서 결�
                 id,
                 name,
                 password: hash,
-                check_Code,
+                check_code,
             });
             sendData.isSuccess = "True"
             await res.send(sendData);

@@ -317,7 +317,7 @@ function Signin() {
 
                 <NavLink className="link"
                   activeclassName="active"
-                  to="teacher/Login"><h2 className="auth-font outer-link pull-left"
+                  to="/teacher/login"><h2 className="auth-font outer-link pull-left"
                   >로그인</h2>
                 </NavLink>
               </div>

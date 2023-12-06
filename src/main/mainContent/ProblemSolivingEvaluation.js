@@ -28,7 +28,7 @@ export default function ProblemSolvingEvaluation() {
 
     return (
         <ProblemSolvingEvaluationContainer>
-            <div className="body-container">
+            <div className="problemSolving-container">
                 <ul className='Evaluation'>
                     {listData.map(item => (
                         <li key={item.id} className='EvaluationList'>

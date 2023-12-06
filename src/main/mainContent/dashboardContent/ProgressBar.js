@@ -3,14 +3,14 @@ import { View, StyleSheet, Animated, Text } from 'react-native';
 import palette from '../../../lib/styles/palette';
 
 
-function ProgressBar({ totalStep, nowStep }) {
+function ProgressBar({ ProgressName, totalStep, nowStep }) {
   const loaderValue = useRef(new Animated.Value(1)).current;
 
   const load = (count) => {
     Animated.timing(loaderValue, {
       toValue: (count / totalStep) * 100,
       duration: 500,
-      useNativeDriver: false,
+      useNativeDriver: true,
     }).start();
   };
 
@@ -21,6 +21,8 @@ function ProgressBar({ totalStep, nowStep }) {
   });
 
   useEffect(() => {
+    const newWidth = (nowStep / totalStep) * 100;
+    console.log('newWidth:', newWidth);
     load(nowStep);
   }, [nowStep]);
 
@@ -32,12 +34,12 @@ function ProgressBar({ totalStep, nowStep }) {
             backgroundColor: palette.cyan[4],
             width,
             height: 5,
-            borderTopRightRadius:8,
-            borderBottomRightRadius:8
+            borderTopRightRadius: 8,
+            borderBottomRightRadius: 8
           }}
         />
-      </View> 
-      <Text style={styles.step}>1공정 {nowStep}/{totalStep}</Text>
+      </View>
+      <Text style={styles.step}> {ProgressName} {nowStep}/{totalStep}</Text>
     </View>
   );
 }

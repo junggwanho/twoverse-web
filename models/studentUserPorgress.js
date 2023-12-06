@@ -26,11 +26,7 @@ class StudentUserProgress extends Sequelize.Model {
                 progress_four: {
                     type: Sequelize.INTEGER,
                     allowNull: true,
-                },
-                progress_five: {
-                    type: Sequelize.INTEGER,
-                    allowNull: true, 
-                },
+                }, 
                 student_user_idx: {
                     type: Sequelize.INTEGER,
                     references: {

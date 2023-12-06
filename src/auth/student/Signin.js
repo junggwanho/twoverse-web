@@ -166,7 +166,7 @@ function Signin() {
         const json = await response.json();
         if (json.isSuccess === "True") {
           alert('회원가입이 완료되었습니다!');
-          navigate("/studnet/Login");
+          navigate("/student/Login");
         } else {
           alert(json.isSuccess);
           return; // submit 동작을 막음
