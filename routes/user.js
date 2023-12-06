@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { findUserName, findCheckCode, studentuserList, findStudentUserFeedback, saveFeedback, findStudentUserChart, findStudentUserProgress } = require('../controllers/user');
+const { findUserName, findCheckCode, studentuserList, findStudentUserFeedback, saveFeedback, findStudentUserChart, findStudentUserProgress, findStudentUserQuiz, findStudentUserQuizYN } = require('../controllers/user');
 
 router.get('/findUserName', findUserName);
 
@@ -16,5 +16,9 @@ router.post('/savefeedback', saveFeedback);
 router.get('/chart/:studentId', findStudentUserChart );
 
 router.get('/progress/:studentId', findStudentUserProgress );
+
+router.get('/quiz/:mainSelectedStudentId', findStudentUserQuiz );
+
+router.get('/quizYN/:studentId', findStudentUserQuizYN);
 
 module.exports = router;

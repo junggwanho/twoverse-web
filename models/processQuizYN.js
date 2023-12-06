@@ -11,10 +11,9 @@ class ProcessQuizYN extends Sequelize.Model {
             quiz_idx: {
                 type: Sequelize.STRING(16),
                 allowNull: false,
-                unique: true
             },
-            quizYN: {
-                type: Sequelize.STRING(255),
+            quizYN: { 
+                type: Sequelize.BOOLEAN, 
                 allowNull: false,
             },
             student_user_idx: {

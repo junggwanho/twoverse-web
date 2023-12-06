@@ -11,7 +11,6 @@ class ProcessExplain extends Sequelize.Model {
             process: {
                 type: Sequelize.STRING(16),
                 allowNull: false,
-                unique: true,
             },
             Explain: {
                 type: Sequelize.STRING(4000),

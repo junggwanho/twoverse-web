@@ -3,6 +3,8 @@ const studentUser = require('../models/studentUser');
 const Feedback = require('../models/feedback');
 const StudentUserScore = require('../models/studentUserScore');
 const StudentUserProgress = require('../models/studentUserPorgress');
+const Quiz = require('../models/processQuiz');
+const QuizYN = require('../models/processQuizYN');
 
 exports.findUserName = async (req, res) => {
     if (req.session && req.session.username) {
@@ -221,4 +223,31 @@ exports.findStudentUserProgress = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }
+
+exports.findStudentUserQuiz = async (req, res) => {
+    try {
+        const exQuiz = await Quiz.findAll();
+
+        const quizList = exQuiz.map(quizItem => ({ idx:quizItem.idx, process: quizItem.process, quiz: quizItem.quiz, quizYN: quizItem.quizYN }));
+        console.log(quizList);
+        res.json(quizList);
+    } catch (error) {
+        console.error('Error fetching student user list:', error);
+        res.status(500).json({ message: '서버 오류가 발생했습니다.' });
+    }
+}
+
+exports.findStudentUserQuizYN = async (req, res) => {
+    const { studentId } = req.params;
+    try{
+        const exQuizYN = await QuizYN.findAll({where: { student_user_idx: studentId }});
+        const quizYNList = exQuizYN.map(quizYNItem => ({idx: quizYNItem.quiz_idx, quizYN: quizYNItem.quizYN}));
+        res.json(quizYNList);
+    } catch (error) {
+        console.error('Error fetching student user list:', error);
+        res.status(500).json({ message: '서버 오류가 발생했습니다.' });
+    }
+}
+
+
 

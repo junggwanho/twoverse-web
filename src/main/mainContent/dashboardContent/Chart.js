@@ -24,7 +24,7 @@ export default function Chart({ mainSelectedStudentId }) {
     const fetchData = async (studentId) => {
         try {
             // TODO: 서버에서 데이터 가져오는 API 호출
-            const response = await fetch(`http://localhost:3001/user/chart/${studentId}`);
+            const response = await fetch(`http://kitcomputer.kr:5200/user/chart/${studentId}`);
             const json = await response.json();
             setUserData(json);
         } catch (error) {

@@ -154,7 +154,7 @@ function Signin() {
     };
 
     try {
-      const response = await fetch("http://localhost:3001/auth/student/signin", {
+      const response = await fetch("http://kitcomputer.kr:5200/auth/student/signin", {
         method: "post",
         headers: {
           "content-type": "application/json",

@@ -62,7 +62,7 @@ export default function InputBox({ mainSelectedStudentId }) {
             setFeedback(editorContent);
 
             // 데이터베이스에 피드백 저장을 위한 API 호출을 수행합니다.
-            const response = await fetch(`http://localhost:3001/user/saveFeedback`, {
+            const response = await fetch(`http://kitcomputer.kr:5200/user/saveFeedback`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ export default function InputBox({ mainSelectedStudentId }) {
             // 초기화
             initializeQuill();
 
-            const response = await fetch(`http://localhost:3001/user/studentuserFeedback/${studentId}`);
+            const response = await fetch(`http://kitcomputer.kr:5200/user/studentuserFeedback/${studentId}`);
             const json = await response.json();
 
             if (json.feedback !== null) {
