@@ -4,30 +4,28 @@ import palette from '../../../lib/styles/palette';
 
 
 function ProgressBar({ ProgressName, totalStep, nowStep }) {
-  const loaderValue = useRef(new Animated.Value(1)).current;
+  const loaderValue = useRef(new Animated.Value(0)).current;
 
-  const load = (count) => {
-    Animated.timing(loaderValue, {
-      toValue: (count / totalStep) * 100,
-      duration: 500,
-      useNativeDriver: true,
-    }).start();
-  };
+  useEffect(() => {
+    const load = (count) => {
+      Animated.timing(loaderValue, {
+        toValue: (count / totalStep) * 100,
+        duration: 500,
+        useNativeDriver: false, // Native driver doesn't support "backgroundColor" changes
+      }).start();
+    };
+
+    load(nowStep);
+  }, [nowStep, totalStep]);
 
   const width = loaderValue.interpolate({
     inputRange: [0, 100],
     outputRange: ["0%", "100%"],
-    extrapolate: "clamp"
+    extrapolate: "clamp",
   });
 
-  useEffect(() => {
-    const newWidth = (nowStep / totalStep) * 100;
-    console.log('newWidth:', newWidth);
-    load(nowStep);
-  }, [nowStep]);
-
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.bar}>
         <Animated.View
           style={{
@@ -35,30 +33,34 @@ function ProgressBar({ ProgressName, totalStep, nowStep }) {
             width,
             height: 5,
             borderTopRightRadius: 8,
-            borderBottomRightRadius: 8
+            borderBottomRightRadius: 8,
           }}
         />
       </View>
-      <Text style={styles.step}> {ProgressName} {nowStep}/{totalStep}</Text>
+      <Text style={styles.step}>
+        {ProgressName} {nowStep}/{totalStep}
+      </Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    marginTop: 6,
+  },
   bar: {
-    marginTop: '6px',
-    width: '100%',
+    width: "100%",
     height: 6,
-    backgroundColor: palette.gray[3]
+    backgroundColor: palette.gray[3],
   },
   step: {
-    color: '#AAC9CE',
-    fontWeight: '400',
+    color: "#AAC9CE",
+    fontWeight: "400",
     fontSize: 16,
     padding: 16,
     lineHeight: 10,
-    textAlign: 'center'
-  }
+    textAlign: "center",
+  },
 });
 
 export default ProgressBar;

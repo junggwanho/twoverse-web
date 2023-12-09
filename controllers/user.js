@@ -11,6 +11,7 @@ exports.findUserName = async (req, res) => {
         try {
             // 세션에서 사용자 이름 가져오기
             const sessionUsername = req.session.username;
+            const sessionUserType= req.session.userType;
 
             console.log(sessionUsername);
             // 데이터베이스에서 사용자 모델 조회
@@ -18,7 +19,10 @@ exports.findUserName = async (req, res) => {
 
             if (sessionUsername) {
                 // 사용자 모델에서 이름 가져오기
-                const data = { username: sessionUsername }; // 'username' 키를 사용하여 데이터를 보냄
+                const data = {
+                    username: sessionUsername,
+                    userType: sessionUserType
+                }; // 'username' 키를 사용하여 데이터를 보냄
                 res.send(data); // 변경: res.send 대신 res.json 사용
             } else {
                 res.status(404).json({ message: '사용자를 찾을 수 없습니다.' });
@@ -228,7 +232,7 @@ exports.findStudentUserQuiz = async (req, res) => {
     try {
         const exQuiz = await Quiz.findAll();
 
-        const quizList = exQuiz.map(quizItem => ({ idx:quizItem.idx, process: quizItem.process, quiz: quizItem.quiz, quizYN: quizItem.quizYN }));
+        const quizList = exQuiz.map(quizItem => ({ idx: quizItem.idx, process: quizItem.process, quiz: quizItem.quiz, quizYN: quizItem.quizYN }));
         console.log(quizList);
         res.json(quizList);
     } catch (error) {
@@ -239,9 +243,9 @@ exports.findStudentUserQuiz = async (req, res) => {
 
 exports.findStudentUserQuizYN = async (req, res) => {
     const { studentId } = req.params;
-    try{
-        const exQuizYN = await QuizYN.findAll({where: { student_user_idx: studentId }});
-        const quizYNList = exQuizYN.map(quizYNItem => ({idx: quizYNItem.quiz_idx, quizYN: quizYNItem.quizYN}));
+    try {
+        const exQuizYN = await QuizYN.findAll({ where: { student_user_idx: studentId } });
+        const quizYNList = exQuizYN.map(quizYNItem => ({ idx: quizYNItem.quiz_idx, quizYN: quizYNItem.quizYN }));
         res.json(quizYNList);
     } catch (error) {
         console.error('Error fetching student user list:', error);

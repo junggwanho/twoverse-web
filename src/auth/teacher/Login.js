@@ -13,7 +13,7 @@ function Login() {
       userPassword: password,
     };
     try {
-      const response = await fetch("http://kitcomputer.kr:5200/auth/login", {
+      const response = await fetch("http://localhost:3001/auth/login", {
         method: "post",
         headers: {
           "content-type": "application/json",
@@ -24,7 +24,6 @@ function Login() {
       if (response.ok) {
         const json = await response.json();
         if (json.isLogin === "True") {
-          alert('로그인이 완료되었습니다!');
           navigate("/"); // 로그인 성공 후 홈 화면으로 이동
           window.location.reload();
         } else {

@@ -119,6 +119,9 @@ exports.login = async (req, res, next) => {
                 req.session.isLogined = true;
                 req.session.userId = exUser.id; // assuming your User model has an 'id' property
                 req.session.username = exUser.name;
+                req.session.userType = "teacher";
+
+                console.log(req.session);
                 
                 if(!req.session.isLogined){
                     console.log("세션실종사건")

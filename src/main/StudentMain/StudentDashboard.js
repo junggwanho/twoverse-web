@@ -1,10 +1,9 @@
-import './Dashboard.css';
+import '../mainContent/Dashboard.css';
 import React, { useState, useEffect } from 'react';
 // import button from "./img/button.png"
-import Chart from './dashboardContent/Chart';
-import InputBox from './dashboardContent/InputBox';
-import StudentUser from './StudentUser';
-import ProgressBarList from './dashboardContent/ProgressBarList';
+import Chart from '../mainContent/dashboardContent/Chart';
+import InputBox from './StudentInputBox';
+import ProgressBarList from '../mainContent/dashboardContent/ProgressBarList';
 import styled from 'styled-components';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -19,12 +18,24 @@ const DashboardContainer = styled.div`
 `
 
 
-export default function Dashbord() {
-    const [mainSelectedStudentId, setMainSelectedStudentId] = useState(21);
+export default function StudentDashbord() {
+    const [mainSelectedStudentId, setMainSelectedStudentId] = useState();
 
-    const handleMainStudentClick = async (selectedStudentId) => {
-        await setMainSelectedStudentId(selectedStudentId);
-    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`http://kitcomputer.kr:5200/user/studentUserIdx`);
+                const json = await response.json();
+                console.log(json);
+                setMainSelectedStudentId(json.idx);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
     return (
         <DashboardContainer>
             <div className="body-container">
@@ -45,9 +56,6 @@ export default function Dashbord() {
                         </Col>
                     </Row>
                 </Container>
-            </div>
-            <div className='Student-userlist'>
-                    <StudentUser onStudentClick={handleMainStudentClick} />
             </div>
         </DashboardContainer>
     );

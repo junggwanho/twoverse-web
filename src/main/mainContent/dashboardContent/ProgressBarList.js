@@ -4,10 +4,10 @@ import Card from 'react-bootstrap/Card';
 import { CardBody } from 'react-bootstrap';
 
 export default function ProgressBarList({ mainSelectedStudentId }) {
-    const [nowStepOne, setNowStepOne] = useState(1);
-    const [nowStepTwo, setNowStepTwo] = useState(1);
-    const [nowStepThree, setNowStepThree] = useState(1);
-    const [nowStepFour, setNowStepFour] = useState(1);
+    const [nowStepOne, setNowStepOne] = useState(100);
+    const [nowStepTwo, setNowStepTwo] = useState(100);
+    const [nowStepThree, setNowStepThree] = useState(100);
+    const [nowStepFour, setNowStepFour] = useState(100);
     const [loading, setLoading] = useState(true);  // 로딩 상태 추가
     const totalStep = 100;
 

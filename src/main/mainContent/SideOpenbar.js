@@ -17,7 +17,7 @@ export default function SideOpenbar({ children }) {
 
     const pasteCheckCode = async () => {
         try {
-            const response = await fetch("http://localhost:3001/user/findCheckCode");
+            const response = await fetch("http://kitcomputer.kr:5200/user/findCheckCode");
             const data = await response.json();
             copyToClipboard(data.checkCode);
             alert("인증키가 복사되었습니다");

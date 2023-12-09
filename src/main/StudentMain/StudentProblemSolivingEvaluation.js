@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './ProblemSolvingEvaluation.css'
+import '../mainContent/ProblemSolvingEvaluation.css'
 import styled from 'styled-components';
-import StudentUser from './StudentUser';
 
 const ProblemSolvingEvaluationContainer = styled.div`
     display: flex;
@@ -11,14 +10,10 @@ const ProblemSolvingEvaluationContainer = styled.div`
     align-items: top;
 `
 
-export default function ProblemSolvingEvaluation() {
+export default function StudentProblemSolvingEvaluation() {
     const [mainSelectedStudentId, setMainSelectedStudentId] = useState(21);
     const [listData, setListData] = useState([]);
     const [quizYN, setQuizYN] = useState([]);
-
-    const handleMainStudentClick = async (selectedStudentId) => {
-        await setMainSelectedStudentId(selectedStudentId);
-    };
 
     useEffect(() => {
         // 웹이 시작하자마자 mainSelectedStudentId를 이용하여 데이터를 가져오는 함수 호출
@@ -28,7 +23,7 @@ export default function ProblemSolvingEvaluation() {
 
     const fetchData = async (studentId) => {
         try {
-            const response = await fetch(`http://localhost:3001/user/quiz/${studentId}`);
+            const response = await fetch(`http://kitcomputer.kr:5200/user/quiz/${studentId}`);
             const json = await response.json();
             setListData(json);
         } catch (error) {
@@ -59,16 +54,13 @@ export default function ProblemSolvingEvaluation() {
                                 <hr />
                             </div>
                             <h6>문제: {item.quiz}</h6>
-                            <h6 className='answerResult'>정답: {item.quizYN === 1 ? 'O' : 'X'}</h6>
+                            <h6 className='answerResult'>문제결과: {item.quizYN === 1 ? 'O' : 'X'}</h6>
                             {quizYN.length > 0 && (
                                 <h6>학생 풀이 결과: {quizYN[index].quizYN == 1 ? '정답' : '오답'}</h6>
                             )}
                         </li>
                     ))}
                 </ul>
-            </div>
-            <div className='Student-userlistPro'>
-                <StudentUser onStudentClick={handleMainStudentClick}/>
             </div>
         </ProblemSolvingEvaluationContainer>
     );

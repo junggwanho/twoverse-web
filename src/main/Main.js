@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
 import Dashbord from './mainContent/Dashboard';
+import StudentDashbord from './StudentMain/StudentDashboard';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import SideOpenbar from './mainContent/SideOpenbar';
 import ProblemSolvingEvaluation from './mainContent/ProblemSolivingEvaluation';
+import StudentProblemSolvingEvaluation from './StudentMain/StudentProblemSolivingEvaluation';
 import styled from "styled-components";
 import { Button, Navbar, Container, Nav, NavDropdown, Carousel, Offcanvas, Form } from 'react-bootstrap';
 
@@ -13,14 +15,16 @@ const MainCotainer = styled.div`
 
 function Main() {
     const [name, setName] = useState("");
+    const [userType, setUserType] = useState("");
 
     useEffect(() => {
         // 서버에서 사용자 데이터 가져오기
-        fetch("http://localhost:3001/user/findUserName")  // 실제 API 엔드포인트로 '/api/user'를 대체하세요
+        fetch("http://kitcomputer.kr:5200/user/findUserName") 
             .then(response => response.json())
             .then(data => {
                 // 서버가 'nickname'이라는 속성으로 사용자 닉네임을 반환한다고 가정합니다.
                 setName(data.username);
+                setUserType(data.userType);
             })
             .catch(error => {
                 console.error('사용자 데이터를 가져오는 중 오류 발생:', error);
@@ -53,28 +57,21 @@ function Main() {
                                 aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
                                 style={{ width: '30px' }}
                             >
-                                {/* <Offcanvas.Header closeButton>
-                            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-                            Offcanvas
-                            </Offcanvas.Title>
-                        </Offcanvas.Header> */}
-                                {/* <Offcanvas.Body
-                                    className="custom-offcanvas"> */}
-                                    {/* <div className="background">
-                                    mode 상태에 따라 Login, Signin, 또는 FindId 컴포넌트를 렌더링합니다.
-                                    {mode === "MAIN" ? <Main setMode={setMode} /> : mode === "EMAIL" ? <Email setMode={setMode} /> : mode === "SIGNIN" ? <Signin setMode={setMode} /> : <FindPw setMode={setMode} />}
-                                </div> */}
-                                    <SideOpenbar />
-                                    
-                                {/* </Offcanvas.Body> */}
-                                {/* <Nav className="justify-content-end flex-grow-1 pe-3"></Nav> */}
+                                <SideOpenbar />
                             </Navbar.Offcanvas>
                         </Container>
                     </Navbar>))}
                 <Routes>
-                    <Route path="/" element={<Dashbord />} />
-                    <Route path="/" element={<Dashbord />} />
-                    <Route path="/Main" element={<ProblemSolvingEvaluation />} />
+                    {userType === 'student' ? (
+                        <Route path="/" element={<StudentDashbord />} />
+                    ) : (
+                        <Route path="/" element={<Dashbord />} />
+                    )}
+                    {userType === 'student' ? (
+                        <Route path="/Main" element={<StudentProblemSolvingEvaluation />} />
+                    ) : (
+                        <Route path="/Main" element={<ProblemSolvingEvaluation />} />
+                    )}
                 </Routes>
             </BrowserRouter>
         </MainCotainer>

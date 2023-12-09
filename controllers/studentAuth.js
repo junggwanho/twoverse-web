@@ -5,8 +5,10 @@ const ejs = require('ejs');
 const path = require('path');
 var appDir = path.dirname(require.main.filename);
 
-const User = require('../models/user')
-const studentUser = require('../models/studentUser')
+const studentUserScore = require('../models/studentUserScore');
+const User = require('../models/user');
+const studentUser = require('../models/studentUser');
+const StudentUserProgress = require('../models/studentUserPorgress');
 
 exports.studentSignin = async (req, res, next) => {  // 데이터 받아서 결과 전송
 
@@ -33,6 +35,21 @@ exports.studentSignin = async (req, res, next) => {  // 데이터 받아서 결�
                 password: hash,
                 check_code,
             });
+            const exStUser = await studentUser.findOne({ where: { id } });
+            await StudentUserProgress.create({
+                progress_one: 0,
+                progress_two: 0,
+                progress_three: 0,
+                progress_four: 0,
+                student_user_idx: exStUser.idx,
+            });
+            await studentUserScore.create({
+                process_score_one: 0,
+                process_score_two: 0,
+                process_score_three: 0,
+                process_score_four: 0,
+                student_user_idx: exStUser.idx,
+            })
             sendData.isSuccess = "True"
             await res.send(sendData);
         } else {
@@ -66,6 +83,7 @@ exports.studentLogin = async (req, res, next) => {
                 req.session.isLogined = true;
                 req.session.userId = exUser.id; // assuming your User model has an 'id' property
                 req.session.username = exUser.name;
+                req.session.userType = "student";
                 
                 if(!req.session.isLogined){
                     console.log("세션실종사건")

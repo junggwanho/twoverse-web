@@ -21,7 +21,7 @@ const StyleButton = styled(Button)`
         `}
 `;
 
-export default function StudentUser({onStudentClick}) {
+export default function StudentUser({ onStudentClick }) {
 
 
     const [initialStudentList, setInitialStudentList] = useState([]);
@@ -32,12 +32,17 @@ export default function StudentUser({onStudentClick}) {
     useEffect(() => {
         const fetchStudentUserList = async () => {
             try {
-                const response = await fetch("http://localhost:3001/user/studentuserList");
+                const response = await fetch("http://kitcomputer.kr:5200/user/studentuserList");
                 const json = await response.json();
 
                 setInitialStudentList(json);
                 setStudentList(json);
-            } catch (error){
+
+                if (json.length > 0) {
+                    setSelectedStudentId(json[0].id);
+                    onStudentClick(json[0].id);
+                }
+            } catch (error) {
                 console.error('Error fetchin student user list:', error);
             }
         };

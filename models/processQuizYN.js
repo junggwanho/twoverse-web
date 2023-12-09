@@ -16,6 +16,10 @@ class ProcessQuizYN extends Sequelize.Model {
                 type: Sequelize.BOOLEAN, 
                 allowNull: false,
             },
+            process:{
+                type: Sequelize.STRING(16),
+                allowNull: false,
+            },
             student_user_idx: {
                 type: Sequelize.INTEGER,
                 references: {

@@ -21,7 +21,7 @@ app.use(cors({
 }));
 
 passportConfig(); // 패스포트 설정
-app.set('port', process.env.PORT || 3001);
+app.set('port', process.env.PORT || 80);
 
 sequelize.sync({ force: false })
     .then(() => {
