@@ -120,31 +120,27 @@ exports.findStudentUserChart = async (req, res) => {
 
     const { studentId } = req.params;
 
-    // Assuming there is a model named StudentUser representing the student_user_idx
     const exstudentUser = await studentUser.findOne({
         where: { idx: studentId },
     });
 
     try {
         if (exstudentUser) {
-            // Assuming there is a foreign key in StudentUserScore model linking it to StudentUser
             const exStudentUserScores = await StudentUserScore.findOne({
                 where: { student_user_idx: studentId },
             });
 
             if (exStudentUserScores) {
-                // Extracting individual process scores
                 const processScoreOne = exStudentUserScores.process_score_one;
                 const processScoreTwo = exStudentUserScores.process_score_two;
                 const processScoreThree = exStudentUserScores.process_score_three;
                 const processScoreFour = exStudentUserScores.process_score_four;
 
-                // Manually create a list with custom names
                 const data = [
                     {
                         name: '1공정',
                         'User Score': processScoreOne,
-                        'Average Score': calculateAverage(processScoreOne), // Assuming you have a function to calculate the average
+                        'Average Score': calculateAverage(processScoreOne),
                     },
                     {
                         name: '2공정',
@@ -169,7 +165,6 @@ exports.findStudentUserChart = async (req, res) => {
                 res.send();
             }
         } else {
-            // If no student is found with the given studentId
             res.status(404).json({ error: 'Student not found' });
         }
     } catch (error) {
@@ -177,10 +172,7 @@ exports.findStudentUserChart = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 
-    // Assuming a function to calculate the average
     function calculateAverage(score) {
-        // Implement your logic to calculate the average
-        // For example, you can return a static value for demonstration purposes
         return 88;
     }
 }

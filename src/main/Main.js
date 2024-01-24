@@ -19,7 +19,7 @@ function Main() {
 
     useEffect(() => {
         // 서버에서 사용자 데이터 가져오기
-        fetch("http://kitcomputer.kr:5200/user/findUserName") 
+        fetch("http://localhost:3001/user/findUserName")  // 실제 API 엔드포인트로 '/api/user'를 대체하세요
             .then(response => response.json())
             .then(data => {
                 // 서버가 'nickname'이라는 속성으로 사용자 닉네임을 반환한다고 가정합니다.

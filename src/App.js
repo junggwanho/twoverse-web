@@ -11,7 +11,7 @@ function App() {
   const [mode, setMode] = useState("AuthMode");
 
   useEffect(() => {
-    fetch("http://kitcomputer.kr:5200/authcheck")
+    fetch("http://localhost:3001/authcheck")
       .then((res) => {
         if (!res.ok) {
           throw new Error("Network response was not ok");

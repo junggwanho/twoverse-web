@@ -17,7 +17,7 @@ export default function ProgressBarList({ mainSelectedStudentId }) {
 
     const fetchData = async (studentId) => {
         try {
-            const response = await fetch(`http://kitcomputer.kr:5200/user/progress/${studentId}`);
+            const response = await fetch(`http://localhost:3001/user/progress/${studentId}`);
             const json = await response.json();
             console.log(json);
             setNowStepOne(json.stepOne);

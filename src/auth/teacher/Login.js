@@ -13,7 +13,7 @@ function Login() {
       userPassword: password,
     };
     try {
-      const response = await fetch("http://kitcomputer.kr:5200/auth/login", {
+      const response = await fetch("http://localhost:3001/auth/login", {
         method: "post",
         headers: {
           "content-type": "application/json",

@@ -38,7 +38,7 @@ export default function ProblemSolvingEvaluation() {
 
     const getQuizYN = async (studentId) => {
         try {
-            const response = await fetch(`http://kitcomputer.kr:5200/user/quizYN/${studentId}`);
+            const response = await fetch(`http://localhost:3001/user/quizYN/${studentId}`);
             const json = await response.json();
             setQuizYN(json);
         } catch (error) {

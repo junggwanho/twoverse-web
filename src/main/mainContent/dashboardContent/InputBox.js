@@ -90,7 +90,7 @@ export default function InputBox({ mainSelectedStudentId }) {
             // 초기화
             initializeQuill();
 
-            const response = await fetch(`http://kitcomputer.kr:5200/user/studentuserFeedback/${studentId}`);
+            const response = await fetch(`http://localhost:3001/user/studentuserFeedback/${studentId}`);
             const json = await response.json();
 
             if (json.feedback !== null) {

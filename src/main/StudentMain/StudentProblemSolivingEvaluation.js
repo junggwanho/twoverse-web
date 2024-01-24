@@ -23,7 +23,7 @@ export default function StudentProblemSolvingEvaluation() {
 
     const fetchData = async (studentId) => {
         try {
-            const response = await fetch(`http://kitcomputer.kr:5200/user/quiz/${studentId}`);
+            const response = await fetch(`http://localhost:3001/user/quiz/${studentId}`);
             const json = await response.json();
             setListData(json);
         } catch (error) {
@@ -33,7 +33,7 @@ export default function StudentProblemSolvingEvaluation() {
 
     const getQuizYN = async (studentId) => {
         try {
-            const response = await fetch(`http://kitcomputer.kr:5200/user/quizYN/${studentId}`);
+            const response = await fetch(`http://localhost:3001/user/quizYN/${studentId}`);
             const json = await response.json();
             setQuizYN(json);
         } catch (error) {
@@ -54,7 +54,7 @@ export default function StudentProblemSolvingEvaluation() {
                                 <hr />
                             </div>
                             <h6>문제: {item.quiz}</h6>
-                            <h6 className='answerResult'>문제결과: {item.quizYN === 1 ? 'O' : 'X'}</h6>
+                            <h6 className='answerResult'>문제 결과: {item.quizYN == 1 ? 'O' : 'X'}</h6>
                             {quizYN.length > 0 && (
                                 <h6>학생 풀이 결과: {quizYN[index].quizYN == 1 ? '정답' : '오답'}</h6>
                             )}

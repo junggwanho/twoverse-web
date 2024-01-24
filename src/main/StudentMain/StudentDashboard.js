@@ -25,7 +25,7 @@ export default function StudentDashbord() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://kitcomputer.kr:5200/user/studentUserIdx`);
+                const response = await fetch(`http://localhost:3001/user/studentUserIdx`);
                 const json = await response.json();
                 console.log(json);
                 setMainSelectedStudentId(json.idx);

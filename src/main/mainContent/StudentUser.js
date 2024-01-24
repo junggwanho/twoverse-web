@@ -32,7 +32,7 @@ export default function StudentUser({ onStudentClick }) {
     useEffect(() => {
         const fetchStudentUserList = async () => {
             try {
-                const response = await fetch("http://kitcomputer.kr:5200/user/studentuserList");
+                const response = await fetch("http://localhost:3001/user/studentuserList");
                 const json = await response.json();
 
                 setInitialStudentList(json);

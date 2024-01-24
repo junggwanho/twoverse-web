@@ -12,16 +12,16 @@ const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
 const unityRouter = require('./routes/unity/unity');
 
-dotenv.config(); // .env 파일을 사용하기 위한 설정
+dotenv.config();
 
 const app = express();
 
 app.use(cors({
-    origin: '*', // 모든 출처 허용 옵션. true 를 써도 된다.
+    origin: '*', 
 }));
 
 passportConfig(); // 패스포트 설정
-app.set('port', process.env.PORT || 80);
+app.set('port', process.env.PORT || 3001);
 
 sequelize.sync({ force: false })
     .then(() => {
@@ -32,7 +32,7 @@ sequelize.sync({ force: false })
     });
 
 app.use(morgan('dev'));
-app.use(express.static(path.join(__dirname, 'build'))); // React 빌드 폴더 경로 설정
+app.use(express.static(path.join(__dirname, 'build'))); 
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -50,7 +50,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-// '/' 루트 경로에 대한 요청 처리 (React 앱 진입점 페이지)
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
@@ -64,21 +63,18 @@ app.use('/authcheck', (req, res) => {
     res.send(sendData);
 })
 
-// '/auth' 경로를 사용하는 라우터 추가
 app.use('/auth', authRouter);
 
 app.use('/user', userRouter);
 
 app.use('/unity', unityRouter);
 
-// 404 에러 핸들링 미들웨어
 app.use((req, res, next) => {
     const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
     error.status = 404;
     next(error);
 });
 
-// 에러 핸들링 미들웨어
 app.use((err, req, res, next) => {
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
